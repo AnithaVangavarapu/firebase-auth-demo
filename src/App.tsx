@@ -1,26 +1,21 @@
-import React, { useState } from "react";
-import { Input, Button } from "./commonComponents";
+// import React, { useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Register, Login } from "./Components/Auth";
+import { Profile } from "./Components/Dashboard";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
-  const [inputValue, setInputValue] = useState<string>("");
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
-    setInputValue(e.target.value);
-  };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("submitted value ", inputValue);
-  };
   return (
-    <div className="font-poppins">
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <Input
-          name="test"
-          value={inputValue}
-          type="text"
-          onChange={handleChange}
-        />
-        <Button label="button" />
-      </form>
+    <div className="font-poppins container mx-auto py-10 flex justify-center">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }
