@@ -28,7 +28,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   return (
     <div>
       {label && <label>{label}</label>}
-      <div className="border rounded-md border-blue-300 py-2 flex justify-between ">
+      <div className="border rounded-md border-blue-300 py-2 flex justify-between max-w-fit">
         <input
           name={name}
           type={inputType}

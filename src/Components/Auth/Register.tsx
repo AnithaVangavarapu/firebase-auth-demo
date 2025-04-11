@@ -27,7 +27,7 @@ const Register = () => {
     const pushErrors: RegisterErrors = {};
     if (!userName.trim()) {
       pushErrors.userName = "Enter username";
-    } else if (!email.match(`/^[a-z0-9. _%+-]+@(?<=[a-z]){1,}+\.(com)$/ `)) {
+    } else if (!/^[a-z0-9._%+-]+@[a-z]+\.[a-z]{2,}$/i.test(email.trim())) {
       pushErrors.email = "Enter valid email";
     } else if (!password.trim()) {
       pushErrors.password = "Enter password";

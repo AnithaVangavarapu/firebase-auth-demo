@@ -23,17 +23,19 @@ const TextInput: React.FC<TextInputProps> = ({
 }) => {
   return (
     <div>
-      {label && <label>{label}</label>}
-      <input
-        name={name}
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="border rounded-md border-blue-300 px-2.5 py-2 focus:outline-blue-300"
-        pattern={pattern && pattern}
-        placeholder={placeholder ? placeholder : name}
-        required={require && require}
-      />
+      <div>
+        {label && <label>{label}</label>}
+        <input
+          name={name}
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="border rounded-md border-blue-300 px-2.5 py-2 focus:outline-blue-300"
+          pattern={pattern && pattern}
+          placeholder={placeholder ? placeholder : name}
+          required={require && require}
+        />
+      </div>
       {error && <p className="text-red-400">{error}</p>}
     </div>
   );
