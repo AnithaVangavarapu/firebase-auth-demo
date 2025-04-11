@@ -1,3 +1,10 @@
+import { clsx } from "clsx";
+import { twMerge } from "tw-merge";
+interface ClassNamesProps {
+  input?: string;
+  label?: string;
+  error?: string;
+}
 interface TextInputProps {
   label?: string;
   placeholder?: string;
@@ -8,6 +15,7 @@ interface TextInputProps {
   onChange: (val: string) => void;
   error?: string;
   require?: boolean;
+  classnames?: ClassNamesProps;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -20,23 +28,37 @@ const TextInput: React.FC<TextInputProps> = ({
   label,
   error,
   require,
+  classnames,
 }) => {
   return (
     <div>
       <div>
-        {label && <label>{label}</label>}
+        {label && (
+          <label className={twMerge(clsx(`text-md`, classnames?.label))}>
+            {label}
+          </label>
+        )}
         <input
           name={name}
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="border rounded-md border-blue-300 px-2.5 py-2 focus:outline-blue-300"
+          className={twMerge(
+            clsx(
+              `border rounded-md border-blue-300 px-2.5 py-2 focus:outline-blue-300`,
+              classnames?.input
+            )
+          )}
           pattern={pattern && pattern}
           placeholder={placeholder ? placeholder : name}
           required={require && require}
         />
       </div>
-      {error && <p className="text-red-400">{error}</p>}
+      {error && (
+        <p className={twMerge(clsx("text-red-400 text-md", classnames?.error))}>
+          {error}
+        </p>
+      )}
     </div>
   );
 };

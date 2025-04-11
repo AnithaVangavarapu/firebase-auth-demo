@@ -1,30 +1,19 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TextInput, Button, PasswordInput } from "../../CommonComponents";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../FireBase";
+import { useLogin } from "./useLogin";
+import GoogleSignin from "./GoogleSignin";
 const Login = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const { handleLogin, email, password, setEmail, setPassword, error } =
+    useLogin();
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log("user logged successfully");
-      window.location.href = "/profile";
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <div className="container mx-auto border w-fit rounded-md border-blue-200">
       <form
         onSubmit={handleLogin}
-        className="flex flex-col items-center p-10 gap-2"
+        className="flex flex-col items-center px-10 gap-2"
       >
         <h2>Login</h2>
-
+        {error && <p className="text-red-400 text-md">{error}</p>}
         <TextInput
           name="Email"
           type="email"
@@ -47,6 +36,7 @@ const Login = () => {
           </Link>
         </p>
       </form>
+      <GoogleSignin />
     </div>
   );
 };

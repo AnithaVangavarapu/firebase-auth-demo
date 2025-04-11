@@ -8,6 +8,7 @@ const Profile: React.FC = () => {
   const handleLogout = async () => {
     try {
       await auth.signOut();
+
       window.location.href = "/login";
       console.log("user logged out");
     } catch (error) {

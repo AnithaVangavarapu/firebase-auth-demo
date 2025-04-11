@@ -26,7 +26,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   const [inputType, setInputType] = useState<string>(type);
 
   return (
-    <div>
+    <div className={`${error ? "pb-8" : ""}`}>
       {label && <label>{label}</label>}
       <div className="border rounded-md border-blue-300 py-2 flex justify-between max-w-fit">
         <input
@@ -49,7 +49,11 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
           <EyeOff onClick={() => setInputType("password")} width={15} />
         )}
       </div>
-      {error && <p className="text-red-400">{error}</p>}
+      {error && (
+        <p className="text-red-400 text-sm  absolute my-2 bg-white  p-1 rounded-md">
+          {error}
+        </p>
+      )}
     </div>
   );
 };
