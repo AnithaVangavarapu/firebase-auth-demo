@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { TextInput, Button, PasswordInput } from "../../CommonComponents";
 import { useLogin } from "./useLogin";
-import GoogleSignin from "./GoogleSignin";
+import { GoogleSignin } from "../../Components";
 const Login = () => {
   const { handleLogin, email, password, setEmail, setPassword, error } =
     useLogin();

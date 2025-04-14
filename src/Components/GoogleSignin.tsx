@@ -1,9 +1,10 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { Button } from "../../CommonComponents";
+import { Button } from "../CommonComponents";
 import { auth, db } from "../FireBase";
 import { setDoc, doc } from "firebase/firestore";
-
+import { useNavigate } from "react-router-dom";
 const GoogleSignin = () => {
+  const navigate = useNavigate();
   const googleSignin = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -19,7 +20,7 @@ const GoogleSignin = () => {
           userName: userData.displayName,
           password: "",
         });
-        window.location.href = "/profile";
+        navigate("/profile");
       }
       console.log("user logged in successfully");
     } catch (error) {

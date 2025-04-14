@@ -1,8 +1,8 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../FireBase";
+import { auth, db } from "../../FireBase";
 import { setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
-
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 interface RegisterErrors {
   userName?: string;
@@ -17,7 +17,7 @@ export const useRegister = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setconfirmPassword] = useState<string>("");
   const [errors, setErrors] = useState<RegisterErrors>({});
-
+  const navigate = useNavigate();
   const validateInputs = (
     userName: string,
     password: string,
@@ -58,7 +58,7 @@ export const useRegister = () => {
             userName: userName,
             password: password,
           });
-          window.location.href = "/profile";
+          navigate("/profile");
         }
         console.log("user registered successfully");
       } catch (error: any) {

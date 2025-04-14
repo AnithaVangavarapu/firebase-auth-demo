@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { PasswordInput, TextInput, Button } from "../../CommonComponents";
-
 import { useRegister } from "./useRegister";
 
 const Register = () => {
