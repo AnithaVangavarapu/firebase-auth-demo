@@ -16,12 +16,12 @@ const Register = () => {
     handleRegister,
   } = useRegister();
   return (
-    <div className="container mx-auto border w-fit rounded-md border-blue-200">
+    <div className="container mx-auto border w-fit rounded-md border-blue-200 h-[50%] flex items-center flex-col justify-center shadow-md">
       <form
         onSubmit={handleRegister}
         className="flex flex-col items-center p-10 gap-2"
       >
-        <h2>Register?</h2>
+        <h2>Register</h2>
         <TextInput
           name="UserName"
           type="text"
@@ -51,12 +51,12 @@ const Register = () => {
           error={errors.confirmPassword ? errors.confirmPassword : undefined}
         />
         <Button label="Register" />
-        <p>
-          Already have account?
-          <Link to={"/login"} className="text-blue-400">
+        <div>
+          <span className="text-sm">Already have account? </span>
+          <Link to={"/login"} className="text-blue-400 text-md">
             Login
           </Link>
-        </p>
+        </div>
       </form>
     </div>
   );

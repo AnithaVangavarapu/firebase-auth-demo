@@ -5,31 +5,30 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoutes = () => {
   const [userDetails, setUserDetails] = useState<DocumentData>({});
-  const [isUser, setIsUser] = useState<boolean>(false);
-  const fetchUserData = async () => {
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
-      console.log(user);
       if (user) {
+        console.log(user);
+        localStorage.setItem("isUserLoggedIn", "true");
         const docRef = doc(db, "Users", user.uid);
         const userdoc = await getDoc(docRef);
         const userData = userdoc.data();
         if (userData) {
-          console.log(typeof userData);
-          setIsUser(true);
           setUserDetails(userData);
-        } else {
-          setIsUser(false);
-          setUserDetails({});
         }
       }
+      setLoading(false);
     });
-  };
-  useEffect(() => {
-    fetchUserData();
   }, [auth]);
-  console.log(isUser);
+  if (loading) return <div>Loading...</div>;
 
-  return isUser ? <Outlet context={userDetails} /> : <Navigate to="/login" />;
+  return localStorage.getItem("isUserLoggedIn") ? (
+    <Outlet context={userDetails} />
+  ) : (
+    <Navigate to={"/login"} />
+  );
 };
 
 export default ProtectedRoutes;

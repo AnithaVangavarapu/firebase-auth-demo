@@ -3,7 +3,7 @@ import { auth, db } from "../../FireBase";
 import { setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 interface RegisterErrors {
   userName?: string;
   email?: string;
@@ -18,6 +18,10 @@ export const useRegister = () => {
   const [confirmPassword, setconfirmPassword] = useState<string>("");
   const [errors, setErrors] = useState<RegisterErrors>({});
   const navigate = useNavigate();
+  useEffect(() => {
+    const isUserLoggedIn = localStorage.getItem("isUserLoggedIn") === "true";
+    if (isUserLoggedIn) navigate("/profile");
+  }, []);
   const validateInputs = (
     userName: string,
     password: string,

@@ -1,5 +1,4 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { Button } from "../CommonComponents";
 import { auth, db } from "../FireBase";
 import { setDoc, doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +29,17 @@ const GoogleSignin = () => {
   return (
     <div className="flex justify-center flex-col items-center pb-2 pt-0">
       <p>-- Or--</p>
-      <Button label="Google Signin" onClick={googleSignin} />
+      <div
+        onClick={googleSignin}
+        className="flex border  gap-2 bg-blue-500 border-blue-500 items-center rounded-[2px] cursor-pointer"
+      >
+        <img
+          src="/google_logo.png
+        "
+          className="w-[20px] h-[20px] bg-white p-0.5 m-0.5"
+        />
+        <span className="text-sm text-white pr-0.5">Sign in with Google</span>
+      </div>
     </div>
   );
 };

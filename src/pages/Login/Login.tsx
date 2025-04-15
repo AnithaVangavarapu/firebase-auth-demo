@@ -7,12 +7,12 @@ const Login = () => {
     useLogin();
 
   return (
-    <div className="container mx-auto border w-fit rounded-md border-blue-200">
+    <div className="container mx-auto border w-fit rounded-md border-blue-200 h-[50%] flex items-center flex-col justify-center shadow-md">
       <form
         onSubmit={handleLogin}
         className="flex flex-col items-center px-10 gap-2"
       >
-        <h2>Login</h2>
+        <h2 className="font-bold">Login</h2>
         {error && <p className="text-red-400 text-md">{error}</p>}
         <TextInput
           name="Email"
@@ -29,12 +29,12 @@ const Login = () => {
           require={true}
         />
         <Button label="Login" />
-        <p>
-          New user?
-          <Link to={"/register"} className="text-blue-400">
+        <div className="">
+          <span className="text-sm">New user? </span>
+          <Link to={"/register"} className="text-blue-400 text-md">
             Register
           </Link>
-        </p>
+        </div>
       </form>
       <GoogleSignin />
     </div>
