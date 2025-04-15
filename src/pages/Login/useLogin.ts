@@ -7,10 +7,12 @@ export const useLogin = () => {
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
+  //Ensure user dont navigate back to login/signup page after logged in
   useEffect(() => {
     const isUserLoggedIn = localStorage.getItem("isUserLoggedIn") === "true";
     if (isUserLoggedIn) navigate("/profile");
   }, []);
+  //Authenticate user with email and password
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {

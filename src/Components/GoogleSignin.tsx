@@ -7,6 +7,7 @@ const GoogleSignin = () => {
   const googleSignin = async () => {
     try {
       const provider = new GoogleAuthProvider();
+      //Prevents automatic signin if user already logged in browser with single account
       provider.setCustomParameters({
         prompt: "select_account",
       });

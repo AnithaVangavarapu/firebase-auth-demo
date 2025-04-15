@@ -18,10 +18,12 @@ export const useRegister = () => {
   const [confirmPassword, setconfirmPassword] = useState<string>("");
   const [errors, setErrors] = useState<RegisterErrors>({});
   const navigate = useNavigate();
+  //Ensure user dont navigate back to login/signup page after logged in
   useEffect(() => {
     const isUserLoggedIn = localStorage.getItem("isUserLoggedIn") === "true";
     if (isUserLoggedIn) navigate("/profile");
   }, []);
+  //Validate inputs
   const validateInputs = (
     userName: string,
     password: string,
@@ -42,6 +44,7 @@ export const useRegister = () => {
     }
     return pushErrors;
   };
+  //Creating new user
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const totalErrors = validateInputs(
@@ -53,9 +56,11 @@ export const useRegister = () => {
     setErrors(totalErrors);
     if (Object.keys(totalErrors).length === 0) {
       try {
+        //Creating new user with email and password
         await createUserWithEmailAndPassword(auth, email, password);
         const currentUser = auth.currentUser;
         console.log(currentUser);
+        //Store new user data in firestore with additional fields (userName and password) based on uid
         if (currentUser) {
           await setDoc(doc(db, "Users", currentUser.uid), {
             email: currentUser.email,
