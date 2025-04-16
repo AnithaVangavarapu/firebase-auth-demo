@@ -16,7 +16,7 @@ const Register = () => {
     handleRegister,
   } = useRegister();
   return (
-    <div className="container mx-auto border w-fit rounded-md border-blue-200 h-[50%] flex items-center flex-col justify-center shadow-md">
+    <div className="container mx-auto border w-fit rounded-md border-blue-200  flex items-center flex-col justify-center shadow-md">
       <form
         onSubmit={handleRegister}
         className="flex flex-col items-center p-10 gap-2"

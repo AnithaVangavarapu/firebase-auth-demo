@@ -7,13 +7,19 @@ const Logout = () => {
     try {
       await auth.signOut();
       localStorage.removeItem("isUserLoggedIn");
-      navigate("/login");
+      navigate("/signin");
       console.log("user logged out");
     } catch (error) {
       console.log(error);
     }
   };
-  return <Button label="Logout" onClick={handleLogout} />;
+  return (
+    <Button
+      label="Logout"
+      onClick={handleLogout}
+      classNames="rounded-[3px] font-medium"
+    />
+  );
 };
 
 export default Logout;

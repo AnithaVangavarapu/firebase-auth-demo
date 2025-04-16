@@ -7,7 +7,7 @@ const Login = () => {
     useLogin();
 
   return (
-    <div className="container mx-auto border w-fit rounded-md border-blue-200 h-[50%] flex items-center flex-col justify-center shadow-md">
+    <div className="container mx-auto border w-fit rounded-md border-blue-200 p-10 flex items-center flex-col justify-center shadow-md">
       <form
         onSubmit={handleLogin}
         className="flex flex-col items-center px-10 gap-2"
@@ -31,8 +31,8 @@ const Login = () => {
         <Button label="Login" />
         <div className="">
           <span className="text-sm">New user? </span>
-          <Link to={"/register"} className="text-blue-400 text-md">
-            Register
+          <Link to={"/signup"} className="text-blue-400 text-md">
+            SignUp
           </Link>
         </div>
       </form>
