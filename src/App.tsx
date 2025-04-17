@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Register, SignUp } from "./pages/Register";
 import { Login, SignIn } from "./pages/Login";
-import { Profile } from "./pages/Dashboard";
+import { Profile, Dashboard, ProfileUpdate } from "./pages/Dashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 function App() {
   return (
-    <div className="font-poppins container mx-auto flex h-screen justify-center items-center p-2">
+    <div className="font-poppins ">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignIn />} />
@@ -16,7 +16,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/signup" element={<SignUp />} />
           <Route element={<ProtectedRoutes />}>
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/profileUpdate" element={<ProfileUpdate />} />
           </Route>
         </Routes>
       </BrowserRouter>

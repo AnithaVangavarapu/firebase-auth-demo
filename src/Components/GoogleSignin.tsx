@@ -19,8 +19,9 @@ const GoogleSignin = () => {
           email: userData.email,
           userName: userData.displayName,
           password: "",
+          photo: userData.photoURL,
         });
-        navigate("/profile");
+        navigate("/dashboard");
       }
       console.log("user logged in successfully");
     } catch (error) {

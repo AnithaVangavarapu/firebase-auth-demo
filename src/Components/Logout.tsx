@@ -6,7 +6,8 @@ const Logout = () => {
   const handleLogout = async () => {
     try {
       await auth.signOut();
-      localStorage.removeItem("isUserLoggedIn");
+      // localStorage.removeItem("isUserLoggedIn");
+      localStorage.clear();
       navigate("/signin");
       console.log("user logged out");
     } catch (error) {

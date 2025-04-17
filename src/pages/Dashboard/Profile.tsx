@@ -1,33 +1,36 @@
 import { DocumentData } from "firebase/firestore";
-import { Logout } from "../../Components";
-import { useOutletContext } from "react-router-dom";
-const Profile: React.FC = () => {
-  const userDetails: DocumentData = useOutletContext();
-  const initialLetter = userDetails.userName.charAt(0).toUpperCase();
+import { contextProps } from "./Dashboard";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { Button } from "../../CommonComponents";
 
+const Profile: React.FC = () => {
+  const userData = useOutletContext<contextProps>();
+  const userDetails: DocumentData = userData.userDetails;
+  const navigate = useNavigate();
   return (
-    <div className=" border rounded-md  border-blue-200 w-[100%] h-[100%] p-2">
-      <div className="flex justify-between">
-        <div className="flex items-center gap-2">
-          <div className="container w-10 h-10 border rounded-full justify-center flex items-center">
-            {initialLetter}
-          </div>
-          <h2 className="">Welcome {userDetails.userName}</h2>
-        </div>{" "}
-        <div className="">
-          <Logout />
-        </div>
+    <div className="flex flex-col m-10 gap-2 items-center">
+      <div className="flex w-[100%]">
+        <div className="w-[10%]">UserName:</div>
+        {userDetails.userName}
       </div>
-      <div className="">
-        <div className="flex">
-          <div className="">UserName:</div>
-          {userDetails.userName}
-        </div>
-        <div className="flex">
-          <div className="">Email:</div>
-          {userDetails.email}
-        </div>
+      <div className="flex w-[100%]">
+        <div className="w-[10%]">Email:</div>
+        {userDetails.email}
       </div>
+      {userDetails.skill && (
+        <div className="flex w-[100%]">
+          <div className="w-[10%]">Skill:</div>
+          {userDetails.skill}
+        </div>
+      )}
+      <Button
+        label="Update Profile"
+        classNames="w-[15%] text-sm py-1 rounded-[3px]"
+        onClick={() => {
+          localStorage.setItem("ProfileUpdate", "true"),
+            navigate("/profileUpdate");
+        }}
+      />
     </div>
   );
 };

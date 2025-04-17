@@ -6,10 +6,11 @@ import { Navigate, Outlet } from "react-router-dom";
 const ProtectedRoutes = () => {
   const [userDetails, setUserDetails] = useState<DocumentData>({});
   const [loading, setLoading] = useState<boolean>(true);
-
+  const [uid, setUid] = useState<string>("");
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
+        setUid(user.uid);
         console.log(user);
         localStorage.setItem("isUserLoggedIn", "true");
         const docRef = doc(db, "Users", user.uid);
@@ -23,11 +24,16 @@ const ProtectedRoutes = () => {
     });
   }, [auth]);
   if (loading) return <div>Loading...</div>;
-
+  const contextData = {
+    userDetails: userDetails,
+    userId: uid,
+  };
+  if (localStorage.getItem("isUserLoggedIn")) {
+  }
   return localStorage.getItem("isUserLoggedIn") ? (
-    <Outlet context={userDetails} />
+    <Outlet context={contextData} />
   ) : (
-    <Navigate to={"/login"} />
+    <Navigate to={"/signin"} />
   );
 };
 

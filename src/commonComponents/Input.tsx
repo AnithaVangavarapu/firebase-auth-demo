@@ -10,6 +10,7 @@ interface ClassNamesProps {
   div?: string;
   label?: string;
   error?: string;
+  maindiv?: string;
 }
 interface InputProps<T extends FieldValues> {
   label?: string;
@@ -32,7 +33,10 @@ const Input = <T extends FieldValues>({
   placeholder,
 }: InputProps<T>) => {
   return (
-    <div className="flex flex-col relative " style={{ width: "100%" }}>
+    <div
+      className={twMerge(clsx("flex flex-col relative ", classnames?.maindiv))}
+      style={{ width: "100%" }}
+    >
       {label && (
         <label className={twMerge(clsx("text-sm", classnames?.label))}>
           {label}
