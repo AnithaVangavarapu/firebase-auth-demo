@@ -6,6 +6,8 @@ import {
 } from "react-hook-form";
 import clsx from "clsx";
 import { twMerge } from "tw-merge";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 interface ClassNamesProps {
   div?: string;
   label?: string;
@@ -14,7 +16,7 @@ interface ClassNamesProps {
 interface InputProps<T extends FieldValues> {
   label?: string;
   register: UseFormRegister<T>;
-  type?: string;
+  type: "password";
   name: Path<T>;
   rules?: RegisterOptions<T>;
   error?: string;
@@ -24,15 +26,16 @@ interface InputProps<T extends FieldValues> {
 const Input = <T extends FieldValues>({
   label,
   register,
-  type = "text",
+  type,
   name,
   rules,
   error,
   classnames,
   placeholder,
 }: InputProps<T>) => {
+  const [inputType, setInputType] = useState<string>(type);
   return (
-    <div className="flex flex-col relative " style={{ width: "100%" }}>
+    <div className="flex flex-col relative" style={{ width: "100%" }}>
       {label && (
         <label className={twMerge(clsx("text-sm", classnames?.label))}>
           {label}
@@ -40,15 +43,24 @@ const Input = <T extends FieldValues>({
       )}
       <div
         className={twMerge(
-          clsx(" border px-1 py-0.5 text-sm rounded-[5px]", classnames?.div)
+          clsx("flex border px-1 py-0.5 text-sm rounded-[5px]", classnames?.div)
         )}
       >
         <input
-          type={type}
+          type={inputType}
           {...register(name, rules)}
-          className={twMerge(clsx(" focus:outline-none"))}
+          className={twMerge(clsx(" focus:outline-none "))}
           placeholder={placeholder}
         />
+        {inputType === "password" ? (
+          <EyeOff
+            onClick={() => setInputType("text")}
+            width={15}
+            className="mr-1"
+          />
+        ) : (
+          <Eye onClick={() => setInputType("password")} width={15} />
+        )}
       </div>
       {error && (
         <p

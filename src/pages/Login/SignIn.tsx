@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Button, Input } from "../../CommonComponents";
+import { Button, Input, InputPassword } from "../../CommonComponents";
 import { SignInProps, useSignIn } from "./useSignIn";
 import { GoogleSignin } from "../../Components";
 const SignIn = () => {
@@ -11,7 +11,7 @@ const SignIn = () => {
   const { handleLogin, authError, Link } = useSignIn();
   const classNames = {
     label: "absolute top-[-10px] bg-white left-4 text-[15px]",
-    input: "pt-2 border-blue-400 rounded-[3px] shadow-md pb-1 ",
+    div: "border-blue-400 rounded-[3px] shadow-md pt-2 pb-1",
   };
   return (
     <div className="container mx-auto border w-fit rounded-md border-blue-200 p-10 flex items-center flex-col justify-center shadow-md">
@@ -35,7 +35,7 @@ const SignIn = () => {
           classnames={classNames}
           error={errors.email?.message}
         />
-        <Input
+        <InputPassword
           register={register}
           name="password"
           rules={{
@@ -44,6 +44,7 @@ const SignIn = () => {
           label="Password"
           classnames={classNames}
           error={errors.password?.message}
+          type="password"
         />
         <Button
           label="SignIn"

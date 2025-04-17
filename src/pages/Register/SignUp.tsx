@@ -1,12 +1,11 @@
-import { Button } from "../../CommonComponents";
+import { Button, Input, InputPassword } from "../../CommonComponents";
 import { useSignUp } from "./useSignUP";
-import { Input } from "../../CommonComponents";
 
 const SignUp = () => {
   const { handleSubmit, register, handleSignup, errors, password, Link } =
     useSignUp();
   const classNames = {
-    input: "border-blue-400 rounded-[2px] shadow-md",
+    div: "border-blue-400 rounded-[3px] shadow-md pt-2 pb-1",
   };
   return (
     <div className="container mx-auto border w-fit rounded-md border-blue-200  flex items-center flex-col justify-center shadow-md">
@@ -38,7 +37,7 @@ const SignUp = () => {
           placeholder="Email"
           classnames={classNames}
         />
-        <Input
+        <InputPassword
           register={register}
           error={errors.password?.message}
           name="password"
@@ -52,7 +51,7 @@ const SignUp = () => {
           classnames={classNames}
         />
 
-        <Input
+        <InputPassword
           register={register}
           name="confirmPassword"
           error={errors.confirmPassword?.message}
