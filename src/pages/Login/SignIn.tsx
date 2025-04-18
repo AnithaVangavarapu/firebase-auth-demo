@@ -2,6 +2,10 @@ import { useForm } from "react-hook-form";
 import { Button, Input, InputPassword } from "../../CommonComponents";
 import { SignInProps, useSignIn } from "./useSignIn";
 import { GoogleSignin } from "../../Components";
+const classNames = {
+  label: "absolute top-[-10px] bg-white left-5 text-[15px]",
+  div: "border-gray-400 rounded-lg  pt-2 pb-1 lg:h-10",
+};
 const SignIn = () => {
   const {
     handleSubmit,
@@ -9,20 +13,19 @@ const SignIn = () => {
     formState: { errors },
   } = useForm<SignInProps>();
   const { handleLogin, authError, Link } = useSignIn();
-  const classNames = {
-    label: "absolute top-[-10px] bg-white left-4 text-[15px]",
-    div: "border-blue-400 rounded-[3px] shadow-md pt-2 pb-1",
-  };
+
   return (
-    <div className="container mx-auto flex h-screen justify-center items-center p-2">
-      <div className="container mx-auto border w-fit rounded-md border-blue-200 p-10 flex items-center flex-col justify-center shadow-md">
-        <h1 className="mb-5 underline font-medium text-blue-500">SignIn</h1>
+    <div className="flex h-screen justify-center items-center">
+      <div className="border border-gray-200 rounded-[20px] flex flex-col justify-evenly shadow-md  lg:w-[25%]  p-3">
+        <h1 className="underline font-medium text-blue-800 text-center text-[18px] ">
+          SignIn
+        </h1>
         <form
           onSubmit={handleSubmit(handleLogin)}
-          className="flex flex-col items-center gap-3 mx-5"
+          className="flex flex-col gap-3 "
         >
           {authError && (
-            <p className="text-sm text-red-400 mb-2">{authError}</p>
+            <p className="text-sm text-red-400 text-center ">{authError}</p>
           )}
           <Input
             register={register}
@@ -50,16 +53,17 @@ const SignIn = () => {
             type="password"
           />
           <Button
-            label="SignIn"
-            classNames="w-full text-sm py-1 rounded-[3px] shadow-md "
+            label="Sign In"
+            classNames="w-full text-sm py-1 rounded-lg p-2 bg-blue-800 border-none"
           />
         </form>
-        <div className="text-sm py-1">
-          <span className="">New user? </span>
-          <Link to={"/signup"} className="text-blue-500 underline">
+        <div className="  text-center">
+          <span className="text-[13px]">New user? </span>
+          <Link to={"/signup"} className="text-blue-800 underline text-[14px]">
             SignUp
           </Link>
         </div>
+        <div className="text-center text-[12px]">-- Or--</div>
         <GoogleSignin />
       </div>
     </div>

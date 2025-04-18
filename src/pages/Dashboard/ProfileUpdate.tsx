@@ -47,7 +47,7 @@ const ProfileUpdate = () => {
           classnames={classNames}
         />
         <div className="text-center">
-          <Button label="Go Back" onClick={() => navigate("/dashboard")} />
+          <Button label="Go Back" onClick={() => navigate(-1)} />
           <Button label="Update" onClick={handleSubmit(handleUpdate)} />
           <Logout />
         </div>

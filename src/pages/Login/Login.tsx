@@ -32,7 +32,7 @@ const Login = () => {
         <div className="">
           <span className="text-sm">New user? </span>
           <Link to={"/signup"} className="text-blue-400 text-md">
-            SignUp
+            Sign Up
           </Link>
         </div>
       </form>

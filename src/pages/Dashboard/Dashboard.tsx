@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
   const initialLetter = userDetails.userName.charAt(0).toUpperCase();
   const [showProfile, setShowProfile] = useState<boolean>(true);
   return (
-    <div className="border rounded-md border-blue-200 max-w-full m-2 p-1">
+    <div className="border rounded-md border-blue-200 max-w-full p-1">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
           <div

@@ -44,19 +44,21 @@ const Input = <T extends FieldValues>({
       )}
       <div
         className={twMerge(
-          clsx(" border px-1 py-0.5 text-sm rounded-[5px]", classnames?.div)
+          clsx(" border px-1 py-0.5 rounded-[5px] ", classnames?.div)
         )}
       >
         <input
           type={type}
           {...register(name, rules)}
-          className={twMerge(clsx(" focus:outline-none"))}
+          className={twMerge(clsx(" focus:outline-none w-full text-[14px]"))}
           placeholder={placeholder}
         />
       </div>
       {error && (
         <p
-          className={twMerge(clsx("text-sm text-red-400 ", classnames?.error))}
+          className={twMerge(
+            clsx("text-[12px] text-red-500 py-0.5", classnames?.error)
+          )}
         >
           {error}
         </p>

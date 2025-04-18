@@ -1,26 +1,29 @@
 import { Button, Input, InputPassword } from "../../CommonComponents";
 import { useSignUp } from "./useSignUP";
-
+const classNames = {
+  label: "absolute top-[-10px] bg-white left-5 text-[15px]",
+  div: "border-gray-400 rounded-lg  pt-2 pb-1 lg:h-10",
+};
 const SignUp = () => {
   const { handleSubmit, register, handleSignup, errors, password, Link } =
     useSignUp();
-  const classNames = {
-    div: "border-blue-400 rounded-[3px] shadow-md pt-2 pb-1",
-  };
+
   return (
-    <div className="container mx-auto flex h-screen justify-center items-center p-2">
-      <div className="container mx-auto border w-fit rounded-md border-blue-200  flex items-center flex-col justify-center shadow-md">
-        <h2 className="my-2 text-blue-500 font-medium underline">SignUp</h2>
+    <div className="flex h-screen justify-center items-center ">
+      <div className=" border  rounded-[20px] border-gray-200  flex  flex-col justify-evenly shadow-md lg:w-[25%]  p-2">
+        <h2 className=" text-blue-800 font-medium underline text-center sm:pb-2">
+          SignUp
+        </h2>
         <form
           onSubmit={handleSubmit(handleSignup)}
-          className="flex flex-col items-center px-10 gap-3"
+          className="flex flex-col gap-3"
         >
           <Input
             register={register}
             error={errors.userName?.message}
             name="userName"
             rules={{ required: "UserName is required" }}
-            placeholder="UserName"
+            label="UserName"
             classnames={classNames}
           />
           <Input
@@ -35,7 +38,7 @@ const SignUp = () => {
                 message: "Enter Valid mail",
               },
             }}
-            placeholder="Email"
+            label="Email"
             classnames={classNames}
           />
           <InputPassword
@@ -48,7 +51,7 @@ const SignUp = () => {
               minLength: { value: 8, message: "Minimum password length is 8" },
               maxLength: { value: 10, message: "Maximum passwor length is 10" },
             }}
-            placeholder="Password"
+            label="Password"
             classnames={classNames}
           />
 
@@ -64,16 +67,19 @@ const SignUp = () => {
                   value === password || "Password don't match",
               },
             }}
-            placeholder="Confirm Password"
+            label="Confirm Password"
             classnames={classNames}
           />
           <Button
-            label="SignUp"
-            classNames="w-full text-sm rounded-[3px] py-1"
+            label="Sign Up"
+            classNames="w-full text-sm rounded-lg py-1 bg-blue-800 border-none p-2"
           />
-          <div className="text-sm mb-2">
-            <span className="">Already have account? </span>
-            <Link to={"/signin"} className="text-blue-500 underline">
+          <div className="text-center">
+            <span className="text-[13px]">Already have account? </span>
+            <Link
+              to={"/signin"}
+              className="text-blue-800 underline text-[14px]"
+            >
               SignIn
             </Link>
           </div>
