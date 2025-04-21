@@ -1,7 +1,13 @@
+import React from "react";
 import { Button } from "../CommonComponents";
 import { auth } from "../FireBase";
 import { useNavigate } from "react-router-dom";
-const Logout = () => {
+import { twMerge } from "tw-merge";
+import clsx from "clsx";
+interface LogoutProps {
+  classNames?: string;
+}
+const Logout: React.FC<LogoutProps> = ({ classNames }) => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
@@ -18,7 +24,7 @@ const Logout = () => {
     <Button
       label="Logout"
       onClick={handleLogout}
-      classNames="rounded-[3px] font-medium"
+      classNames={twMerge(clsx("rounded-[3px] font-medium", classNames))}
     />
   );
 };

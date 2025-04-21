@@ -1,9 +1,11 @@
 import { Button, Input, InputPassword } from "../../CommonComponents";
 import { useSignUp } from "./useSignUP";
+
 const classNames = {
   label: "absolute top-[-10px] bg-white left-5 text-[15px]",
   div: "border-gray-400 rounded-lg  pt-2 pb-1 lg:h-10",
 };
+
 const SignUp = () => {
   const { handleSubmit, register, handleSignup, errors, password, Link } =
     useSignUp();

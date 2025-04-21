@@ -3,8 +3,9 @@ import { twMerge } from "tw-merge";
 interface ButtonProps {
   label: string;
   disable?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   classNames?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -12,6 +13,7 @@ const Button: React.FC<ButtonProps> = ({
   disable,
   onClick,
   classNames,
+  type,
 }) => {
   return (
     <button
@@ -23,6 +25,7 @@ const Button: React.FC<ButtonProps> = ({
       )}
       style={{ pointerEvents: disable ? "none" : undefined }}
       onClick={onClick}
+      type={type}
     >
       {label}
     </button>

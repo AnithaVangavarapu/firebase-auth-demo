@@ -12,14 +12,14 @@ export const useSignIn = () => {
   //Ensure user dont navigate back to login/signup page after logged in
   useEffect(() => {
     const isUserLoggedIn = localStorage.getItem("isUserLoggedIn") === "true";
-    if (isUserLoggedIn) navigate("/dashboard");
+    if (isUserLoggedIn) navigate("/profile");
   }, []);
   const handleLogin = async (data: SignInProps) => {
     console.log(data);
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       console.log("user logged successfully");
-      navigate("/dashboard");
+      navigate("/profile");
     } catch (error) {
       console.log(error);
       setAuthError("Invalid email or password");

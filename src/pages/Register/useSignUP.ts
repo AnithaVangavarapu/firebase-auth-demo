@@ -23,7 +23,7 @@ export const useSignUp = () => {
   //Ensure user dont navigate back to login/signup page after logged in
   useEffect(() => {
     const isUserLoggedIn = localStorage.getItem("isUserLoggedIn") === "true";
-    if (isUserLoggedIn) navigate("/dashboard");
+    if (isUserLoggedIn) navigate("/profile");
   }, []);
   const handleSignup = async (data: SignUpProps) => {
     console.log(data);
@@ -40,7 +40,7 @@ export const useSignUp = () => {
           password: data.password,
           photo: "",
         });
-        navigate("/dashboard");
+        navigate("/profile");
       }
       console.log("user registered successfully");
     } catch (error: any) {

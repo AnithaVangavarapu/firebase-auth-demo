@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { auth, db } from "../FireBase";
 import { doc, DocumentData, getDoc } from "firebase/firestore";
 import { Navigate, Outlet } from "react-router-dom";
-
+import { Navbar } from "../pages/Dashboard";
 const ProtectedRoutes = () => {
   const [userDetails, setUserDetails] = useState<DocumentData>({});
   const [loading, setLoading] = useState<boolean>(true);
@@ -23,15 +23,22 @@ const ProtectedRoutes = () => {
       setLoading(false);
     });
   }, [auth]);
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading...
+      </div>
+    );
   const contextData = {
     userDetails: userDetails,
     userId: uid,
   };
-  if (localStorage.getItem("isUserLoggedIn")) {
-  }
+
   return localStorage.getItem("isUserLoggedIn") ? (
-    <Outlet context={contextData} />
+    <div>
+      <Navbar userDetails={userDetails} />
+      <Outlet context={contextData} />
+    </div>
   ) : (
     <Navigate to={"/signin"} />
   );

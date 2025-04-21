@@ -1,20 +1,26 @@
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { Button, Input } from "../../CommonComponents";
 import { useForm } from "react-hook-form";
-import { contextProps } from "./Dashboard";
+import { contextProps } from "./Profile";
 import { DocumentData, updateDoc, doc } from "firebase/firestore";
 import { db } from "../../FireBase";
-import { Logout } from "../../Components";
 
 interface UpdateFormProps {
   skill?: string;
 }
+
+const classNames = {
+  maindiv: "flex flex-row ",
+  label: "w-[10%]",
+};
+
 const ProfileUpdate = () => {
   const userData = useOutletContext<contextProps>();
   const userDetails: DocumentData = userData.userDetails;
   const userId: string = userData.userId;
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<UpdateFormProps>();
+
   const handleUpdate = async (data: UpdateFormProps) => {
     console.log(data);
     const updatedData = {
@@ -22,12 +28,14 @@ const ProfileUpdate = () => {
     };
     const docRef = doc(db, "Users", userId);
     console.log(docRef);
-    await updateDoc(docRef, updatedData).catch((error) => console.log(error));
+    await updateDoc(docRef, updatedData)
+      .then(() => {
+        alert("updated successfully");
+        navigate(-1);
+      })
+      .catch((error) => console.log(error));
   };
-  const classNames = {
-    maindiv: "flex flex-row ",
-    label: "w-[10%]",
-  };
+
   return (
     <div className="flex flex-col container items-center m-5 p-5 pl-[10%] border gap-2">
       <h1>Profile Update</h1>
@@ -39,7 +47,7 @@ const ProfileUpdate = () => {
         <div className="w-[10%]">Email:</div>
         {userDetails.email}
       </div>
-      <form className="w-[100%]">
+      <form className="w-[100%]" onSubmit={handleSubmit(handleUpdate)}>
         <Input
           name="skill"
           label="Add Skill:"
@@ -47,9 +55,8 @@ const ProfileUpdate = () => {
           classnames={classNames}
         />
         <div className="text-center">
-          <Button label="Go Back" onClick={() => navigate(-1)} />
-          <Button label="Update" onClick={handleSubmit(handleUpdate)} />
-          <Logout />
+          <Button label="Go Back" onClick={() => navigate(-1)} type="button" />
+          <Button label="Update" type="submit" />
         </div>
       </form>
     </div>
