@@ -1,9 +1,12 @@
+import { twMerge } from "tw-merge";
 import { Button, Input, InputPassword } from "../../CommonComponents";
 import { useSignUp } from "./useSignUP";
-
+import clsx from "clsx";
 const classNames = {
-  label: "absolute top-[-10px] bg-white left-5 text-[15px]",
-  div: "border-gray-400 rounded-lg  pt-2 pb-1 lg:h-10",
+  label: "text-[12px] text-gray-600 pt-3 pb-1",
+  div: "border-gray-300 rounded-lg py-[5px] mb-1",
+  input: "text-[14px] p-1 font-medium",
+  error: "text-red-500",
 };
 
 const SignUp = () => {
@@ -11,22 +14,18 @@ const SignUp = () => {
     useSignUp();
 
   return (
-    <div className="flex h-screen justify-center items-center ">
-      <div className=" border  rounded-[20px] border-gray-200  flex  flex-col justify-evenly shadow-md lg:w-[25%]  p-2">
-        <h2 className=" text-blue-800 font-medium underline text-center sm:pb-2">
-          SignUp
-        </h2>
-        <form
-          onSubmit={handleSubmit(handleSignup)}
-          className="flex flex-col gap-3"
-        >
+    <div className="flex h-screen justify-center items-center bg-gray-100">
+      <div className=" border  rounded-[20px] border-gray-200  flex  flex-col justify-evenly shadow-md lg:w-[25%]  py-8 px-6 bg-white">
+        <h2 className="text-lg font-medium ">Sign Up</h2>
+        <form onSubmit={handleSubmit(handleSignup)} className="flex flex-col ">
           <Input
             register={register}
             error={errors.userName?.message}
             name="userName"
-            rules={{ required: "UserName is required" }}
-            label="UserName"
+            rules={{ required: "Username is required" }}
+            label="Username"
             classnames={classNames}
+            placeholder="Username"
           />
           <Input
             register={register}
@@ -42,6 +41,7 @@ const SignUp = () => {
             }}
             label="Email"
             classnames={classNames}
+            placeholder="Email"
           />
           <InputPassword
             register={register}
@@ -55,6 +55,7 @@ const SignUp = () => {
             }}
             label="Password"
             classnames={classNames}
+            placeholder="Password"
           />
 
           <InputPassword
@@ -71,18 +72,24 @@ const SignUp = () => {
             }}
             label="Confirm Password"
             classnames={classNames}
+            placeholder="Confirm Password"
           />
           <Button
             label="Sign Up"
-            classNames="w-full text-sm rounded-lg py-1 bg-blue-800 border-none p-2"
+            classNames={twMerge(
+              clsx(
+                "w-full text-sm rounded-lg  bg-black border-none p-[10px] mt-6 font-medium ",
+                Object.keys(errors).length > 0 && "bg-gray-500"
+              )
+            )}
           />
-          <div className="text-center">
-            <span className="text-[13px]">Already have account? </span>
+          <div className="text-center mt-2">
+            <span className="text-[12px]">Already have account?&nbsp;</span>
             <Link
               to={"/signin"}
-              className="text-blue-800 underline text-[14px]"
+              className={twMerge(clsx("underline text-[14px] font-medium"))}
             >
-              SignIn
+              Sign In
             </Link>
           </div>
         </form>

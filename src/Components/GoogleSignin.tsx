@@ -29,15 +29,15 @@ const GoogleSignin = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center m-1">
       <div
         onClick={googleSignin}
-        className="flex border border-blue-800 gap-2 bg-blue-800 items-center rounded-[3px] cursor-pointer"
+        className="flex border border-black gap-2 bg-black items-center rounded-lg cursor-pointer p-[7px] font-medium"
       >
         <img
           src="/google_logo.png
         "
-          className="w-[20px] h-[20px] bg-white p-0.5 m-0.5"
+          className="w-[20px] h-[20px] p-0.5 m-0.5"
         />
         <span className="text-sm text-white pr-0.5">Sign in with Google</span>
       </div>

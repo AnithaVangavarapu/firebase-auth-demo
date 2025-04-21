@@ -4,8 +4,10 @@ import { SignInProps, useSignIn } from "./useSignIn";
 import { GoogleSignin } from "../../Components";
 
 const classNames = {
-  label: "absolute top-[-10px] bg-white left-5 text-[15px]",
-  div: "border-gray-400 rounded-lg  pt-2 pb-1 lg:h-10",
+  label: "text-[12px] text-gray-600 pt-4 pb-1",
+  div: "border-gray-300 rounded-lg py-[5px]",
+  input: "text-[14px] p-1 font-medium",
+  error: "text-red-500 mt-0.5",
 };
 
 const SignIn = () => {
@@ -17,17 +19,12 @@ const SignIn = () => {
   const { handleLogin, authError, Link } = useSignIn();
 
   return (
-    <div className="flex h-screen justify-center items-center">
-      <div className="border border-gray-200 rounded-[20px] flex flex-col justify-evenly shadow-md  lg:w-[25%]  p-3">
-        <h1 className="underline font-medium text-blue-800 text-center text-[18px] ">
-          SignIn
-        </h1>
-        <form
-          onSubmit={handleSubmit(handleLogin)}
-          className="flex flex-col gap-3 "
-        >
+    <div className="flex h-screen justify-center items-center bg-gray-100">
+      <div className="border border-gray-200 rounded-[20px] flex flex-col justify-evenly shadow-md  lg:w-[25%]  py-8 px-6 bg-white">
+        <h1 className="text-lg font-medium">Sign In</h1>
+        <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col">
           {authError && (
-            <p className="text-sm text-red-400 text-center ">{authError}</p>
+            <p className="text-sm text-red-700 text-center ">{authError}</p>
           )}
           <Input
             register={register}
@@ -42,6 +39,7 @@ const SignIn = () => {
             label="Email"
             classnames={classNames}
             error={errors.email?.message}
+            placeholder="Email"
           />
           <InputPassword
             register={register}
@@ -53,19 +51,24 @@ const SignIn = () => {
             classnames={classNames}
             error={errors.password?.message}
             type="password"
+            placeholder="Password"
           />
+          <div className="text-end text-[12px] underline mt-1">
+            Forget Password?
+          </div>
           <Button
             label="Sign In"
-            classNames="w-full text-sm py-1 rounded-lg p-2 bg-blue-800 border-none"
+            classNames="w-full text-sm  rounded-lg p-[10px] bg-black border-none mt-5 font-medium"
           />
         </form>
-        <div className="  text-center">
-          <span className="text-[13px]">New user? </span>
-          <Link to={"/signup"} className="text-blue-800 underline text-[14px]">
-            SignUp
+        <div className="  text-center mt-4">
+          <span className="text-[12px]">New user?&nbsp; </span>
+
+          <Link to={"/signup"} className=" underline text-[14px] font-medium">
+            Sign Up
           </Link>
         </div>
-        <div className="text-center text-[12px]">-- Or--</div>
+        <div className="text-center text-[12px] m-0.5">-- Or--</div>
         <GoogleSignin />
       </div>
     </div>

@@ -40,7 +40,7 @@ const Profile: React.FC = () => {
       )}
       <Button
         label="Update Profile"
-        classNames="w-[15%] text-sm py-1 rounded-[3px]"
+        classNames="w-[15%] text-sm py-1 rounded-md bg-black border-black font-medium"
         onClick={() => {
           localStorage.setItem("ProfileUpdate", "true"),
             navigate("/profileUpdate");

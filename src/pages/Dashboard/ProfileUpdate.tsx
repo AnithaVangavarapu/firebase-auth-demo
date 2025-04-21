@@ -37,7 +37,7 @@ const ProfileUpdate = () => {
   };
 
   return (
-    <div className="flex flex-col container items-center m-5 p-5 pl-[10%] border gap-2">
+    <div className="flex flex-col container items-center p-5 pl-[10%] border gap-2">
       <h1>Profile Update</h1>
       <div className="flex w-[100%]">
         <div className="w-[10%]">UserName:</div>

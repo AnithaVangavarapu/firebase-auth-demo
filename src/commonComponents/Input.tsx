@@ -11,6 +11,7 @@ interface ClassNamesProps {
   label?: string;
   error?: string;
   maindiv?: string;
+  input?: string;
 }
 interface InputProps<T extends FieldValues> {
   label?: string;
@@ -44,20 +45,27 @@ const Input = <T extends FieldValues>({
       )}
       <div
         className={twMerge(
-          clsx(" border px-1 py-0.5 rounded-[5px] ", classnames?.div)
+          clsx(
+            " border px-1 py-0.5 rounded-[5px] ",
+            classnames?.div,
+            `${error && "border-red-500"}`
+          )
         )}
       >
         <input
           type={type}
           {...register(name, rules)}
-          className={twMerge(clsx(" focus:outline-none w-full text-[14px]"))}
+          className={twMerge(
+            clsx(" focus:outline-none w-full text-[14px]", classnames?.input)
+          )}
           placeholder={placeholder}
+          style={{}}
         />
       </div>
       {error && (
         <p
           className={twMerge(
-            clsx("text-[12px] text-red-500 py-0.5", classnames?.error)
+            clsx("text-[12px] text-red-500 ", classnames?.error)
           )}
         >
           {error}
