@@ -6,6 +6,7 @@ import {
 } from "react-hook-form";
 import clsx from "clsx";
 import { twMerge } from "tw-merge";
+
 interface ClassNamesProps {
   div?: string;
   label?: string;
@@ -13,6 +14,7 @@ interface ClassNamesProps {
   maindiv?: string;
   input?: string;
 }
+
 interface InputProps<T extends FieldValues> {
   label?: string;
   register: UseFormRegister<T>;
@@ -22,7 +24,9 @@ interface InputProps<T extends FieldValues> {
   error?: string;
   classnames?: ClassNamesProps;
   placeholder?: string;
+  readonly?: boolean;
 }
+
 const Input = <T extends FieldValues>({
   label,
   register,
@@ -32,6 +36,7 @@ const Input = <T extends FieldValues>({
   error,
   classnames,
   placeholder,
+  readonly,
 }: InputProps<T>) => {
   return (
     <div
@@ -48,7 +53,8 @@ const Input = <T extends FieldValues>({
           clsx(
             " border px-1 py-0.5 rounded-[5px] ",
             classnames?.div,
-            `${error && "border-red-500"}`
+            `${error && "border-red-500"}`,
+            `${readonly ? "bg-gray-200" : ""}`
           )
         )}
       >
@@ -59,7 +65,7 @@ const Input = <T extends FieldValues>({
             clsx(" focus:outline-none w-full text-[14px]", classnames?.input)
           )}
           placeholder={placeholder}
-          style={{}}
+          readOnly={readonly}
         />
       </div>
       {error && (

@@ -16,7 +16,7 @@ const SignUp = () => {
   return (
     <div className="flex h-screen justify-center items-center bg-gray-100">
       <div className=" border  rounded-[20px] border-gray-200  flex  flex-col justify-evenly shadow-md lg:w-[25%]  py-8 px-6 bg-white">
-        <h2 className="text-lg font-medium ">Sign Up</h2>
+        <h2 className="text-lg font-medium pb-1">Sign Up</h2>
         <form onSubmit={handleSubmit(handleSignup)} className="flex flex-col ">
           <Input
             register={register}
@@ -83,11 +83,11 @@ const SignUp = () => {
               )
             )}
           />
-          <div className="text-center mt-2">
-            <span className="text-[12px]">Already have account?&nbsp;</span>
+          <div className="text-center mt-3 text-[12px]">
+            <span className="">Already have account?&nbsp;</span>
             <Link
               to={"/signin"}
-              className={twMerge(clsx("underline text-[14px] font-medium"))}
+              className={twMerge(clsx("underline  font-medium"))}
             >
               Sign In
             </Link>

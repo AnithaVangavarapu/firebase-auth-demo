@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { auth, db } from "../FireBase";
 import { doc, DocumentData, getDoc } from "firebase/firestore";
 import { Navigate, Outlet } from "react-router-dom";
-import { Navbar } from "../pages/Dashboard";
+import { Navbar, Sidemenu } from "../pages/Dashboard";
 const ProtectedRoutes = () => {
   const [userDetails, setUserDetails] = useState<DocumentData>({});
   const [loading, setLoading] = useState<boolean>(true);
@@ -25,8 +25,13 @@ const ProtectedRoutes = () => {
   }, [auth]);
   if (loading)
     return (
-      <div className="flex justify-center items-center h-screen">
-        Loading...
+      <div className="flex justify-center items-center h-screen flex-col bg-black">
+        <img
+          src="/loading.gif
+    "
+          className="w-[100px] h-[100px] p-0.5 m-0.5"
+        />
+        <p className=" text-white text-lg font-medium"> LOADING...</p>
       </div>
     );
   const contextData = {
@@ -35,9 +40,18 @@ const ProtectedRoutes = () => {
   };
 
   return localStorage.getItem("isUserLoggedIn") ? (
-    <div>
-      <Navbar userDetails={userDetails} />
-      <Outlet context={contextData} />
+    <div className="max-w-full ">
+      <div className="">
+        <Navbar userDetails={userDetails} />
+      </div>
+      <div className="grid grid-cols-11 max-w-full">
+        <div className="bg-black text-white col-span-1">
+          <Sidemenu />
+        </div>
+        <div className="col-span-10 ">
+          <Outlet context={contextData} />
+        </div>
+      </div>
     </div>
   ) : (
     <Navigate to={"/signin"} />

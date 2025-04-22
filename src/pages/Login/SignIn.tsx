@@ -61,10 +61,10 @@ const SignIn = () => {
             classNames="w-full text-sm  rounded-lg p-[10px] bg-black border-none mt-5 font-medium"
           />
         </form>
-        <div className="  text-center mt-4">
-          <span className="text-[12px]">New user?&nbsp; </span>
+        <div className=" text-[12px] text-center mt-4">
+          <span className="">New user?&nbsp; </span>
 
-          <Link to={"/signup"} className=" underline text-[14px] font-medium">
+          <Link to={"/signup"} className=" underline font-medium">
             Sign Up
           </Link>
         </div>
