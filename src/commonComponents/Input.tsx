@@ -25,6 +25,7 @@ interface InputProps<T extends FieldValues> {
   classnames?: ClassNamesProps;
   placeholder?: string;
   readonly?: boolean;
+  accept?: string;
 }
 
 const Input = <T extends FieldValues>({
@@ -37,6 +38,7 @@ const Input = <T extends FieldValues>({
   classnames,
   placeholder,
   readonly,
+  accept,
 }: InputProps<T>) => {
   return (
     <div
@@ -66,6 +68,7 @@ const Input = <T extends FieldValues>({
           )}
           placeholder={placeholder}
           readOnly={readonly}
+          accept={accept}
         />
       </div>
       {error && (

@@ -44,8 +44,8 @@ const ProtectedRoutes = () => {
       <div className="">
         <Navbar userDetails={userDetails} />
       </div>
-      <div className="grid grid-cols-12 max-w-full">
-        <div className="bg-black text-white col-span-2">
+      <div className="grid grid-cols-12 max-w-full ">
+        <div className="bg-black text-white col-span-2 lg:min-h-[845px]">
           <Sidemenu />
         </div>
         <div className="col-span-10 ">

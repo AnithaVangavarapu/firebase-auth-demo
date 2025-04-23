@@ -1,7 +1,7 @@
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { Button, Input } from "../../CommonComponents";
 import { useForm } from "react-hook-form";
-import { contextProps } from "./Profile";
+import { contextProps } from "./profile/Profile";
 import { DocumentData, updateDoc, doc } from "firebase/firestore";
 import { db } from "../../FireBase";
 

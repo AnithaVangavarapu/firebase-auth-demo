@@ -8,8 +8,21 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ userDetails }) => {
-  const initialLetter = userDetails.userName.charAt(0).toUpperCase();
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  let initial;
+  if (
+    userDetails?.firstName !== undefined ||
+    userDetails?.lastName !== undefined
+  ) {
+    initial =
+      userDetails?.firstName.charAt(0).toUpperCase() +
+      userDetails?.lastName.charAt(0).toUpperCase();
+  }
+  const initialLetter = initial
+    ? initial
+    : userDetails?.userName?.charAt(0).toUpperCase();
+  const fullName = userDetails?.firstName + " " + userDetails?.lastName;
+  console.log("fullName", fullName);
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
@@ -22,11 +35,15 @@ const Navbar: React.FC<NavbarProps> = ({ userDetails }) => {
     }
   };
   return (
-    <div className="max-w-full  mx-5 my-2 border">
+    <div className="max-w-full  mx-5 my-2 pr-5">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold pl-8">LOGO</h2>
         <div className="flex gap-2 items-center">
-          <div className=" container w-5 h-5 border rounded-full justify-center flex items-center cursor-pointer overflow-hidden relative">
+          <div
+            className={` container w-5 h-5  rounded-full justify-center flex items-center overflow-hidden relative,${
+              userDetails.photo ? "" : " text-black border"
+            }`}
+          >
             {userDetails.photo ? (
               <img src={userDetails.photo} alt={initialLetter} className="" />
             ) : (
@@ -34,10 +51,15 @@ const Navbar: React.FC<NavbarProps> = ({ userDetails }) => {
             )}
           </div>
 
-          <div className="text-sm ">{userDetails.userName}</div>
-          <div className="">
+          <div className="text-sm ">
+            {" "}
+            {fullName !== "undefined undefined"
+              ? fullName
+              : userDetails.userName}
+          </div>
+          <div className="cursor-pointer">
             <Triangle
-              width={8}
+              width={6}
               fill="black"
               style={{
                 transform: `${showDropdown ? "none" : "rotate(180deg)"}`,

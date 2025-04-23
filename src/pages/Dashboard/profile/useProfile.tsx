@@ -1,0 +1,152 @@
+import { auth, db } from "../../../FireBase";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { DocumentData, getDoc, doc, updateDoc } from "firebase/firestore";
+import { useOutletContext } from "react-router-dom";
+import { updatePassword } from "firebase/auth";
+export interface contextProps {
+  userDetails: DocumentData;
+  userId: string;
+}
+export interface ProfileUpdateProps {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  userName?: string;
+  currentPassword?: string;
+  newPassword?: string;
+  confirmNewPassword?: string;
+}
+
+const classNames = {
+  div: "border-gray-200 rounded-[2px] p-1",
+  label: "text-[10px] pb-1 text-gray-500 font-medium",
+  input: "text-[12px]  font-medium",
+  error: "text-red-500 text-[10px] font-medium",
+};
+export const useProfile = () => {
+  const userdata = useOutletContext<contextProps>();
+  const [userDetails, setUserDetails] = useState<DocumentData>({});
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+    watch,
+  } = useForm<ProfileUpdateProps>();
+  const [showImagePopup, setShowImagePopup] = useState<boolean>(false);
+  const new_password = watch("newPassword");
+  const current_password = watch("currentPassword");
+
+  const fetchUserDetails = async () => {
+    const docRef = doc(db, "Users", userdata.userId);
+    const userdoc = await getDoc(docRef);
+    const userData = userdoc.data();
+    if (userData) {
+      setUserDetails(userData);
+      const newDefaultValues: object = {
+        firstName: userData.firstName ? userData.firstName : "",
+        lastName: userData.lastName ? userData.lastName : "",
+        email: userData.email ? userData.email : "",
+        userName: userData.userName ? userData.userName : "",
+      };
+      reset(newDefaultValues);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserDetails();
+  }, [showImagePopup]);
+  let initial;
+  if (
+    userDetails?.firstName !== undefined ||
+    userDetails?.lastName !== undefined
+  ) {
+    initial =
+      userDetails?.firstName.charAt(0).toUpperCase() +
+      userDetails?.lastName.charAt(0).toUpperCase();
+  }
+  const initialLetter = initial
+    ? initial
+    : userDetails?.userName?.charAt(0).toUpperCase();
+  const fullName = userDetails?.firstName + " " + userDetails?.lastName;
+  const handleDataChange = async (data: ProfileUpdateProps) => {
+    console.log("changed data", data);
+    const docRef = doc(db, "Users", userdata.userId);
+    try {
+      console.log("currentPassword", data.currentPassword);
+      if (data.currentPassword !== undefined) {
+        if (data.currentPassword === data.newPassword) {
+          alert("Current and new password should not be same");
+          return;
+        } else {
+          const user = auth.currentUser;
+          if (user !== null && data.newPassword) {
+            updatePassword(user, data.newPassword)
+              .then(() => {
+                const updateNewPassword = {
+                  password: data.newPassword,
+                };
+                updateDoc(docRef, updateNewPassword);
+              })
+              .catch((error) => {
+                alert("Something went wrong while updating Password");
+                console.log(error);
+                return;
+              });
+          }
+        }
+      }
+      const updateData = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+      };
+      await updateDoc(docRef, updateData)
+        .then(() => {
+          alert("Data Updated");
+          window.location.reload();
+        })
+        .catch((error) => {
+          alert("Something went wrong"), console.log(error);
+        });
+    } catch (error) {}
+  };
+  const handleRemovePicture = async () => {
+    if (userDetails.photo) {
+      if (window.confirm("Do you want to remove profile picture?")) {
+        const docRef = doc(db, "Users", userdata.userId);
+        const updatePhoto = {
+          photo: "",
+        };
+        await updateDoc(docRef, updatePhoto)
+          .then(() => {
+            alert("Profile picture removed");
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.log(error);
+            alert("Something went wrong");
+          });
+      } else {
+        return;
+      }
+    } else {
+      alert("There is no profile picture to remove");
+    }
+  };
+  return {
+    handleSubmit,
+    handleDataChange,
+    register,
+    setShowImagePopup,
+    userDetails,
+    initialLetter,
+    classNames,
+    showImagePopup,
+    new_password,
+    current_password,
+    errors,
+    handleRemovePicture,
+    fullName,
+  };
+};

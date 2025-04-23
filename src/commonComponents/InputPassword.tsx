@@ -23,6 +23,7 @@ interface InputProps<T extends FieldValues> {
   error?: string;
   classnames?: ClassNamesProps;
   placeholder?: string;
+  readonly?: boolean;
 }
 const Input = <T extends FieldValues>({
   label,
@@ -33,6 +34,7 @@ const Input = <T extends FieldValues>({
   error,
   classnames,
   placeholder,
+  readonly,
 }: InputProps<T>) => {
   const [inputType, setInputType] = useState<string>(type);
   return (
@@ -47,7 +49,7 @@ const Input = <T extends FieldValues>({
           clsx(
             "flex border px-1 py-0.5 rounded-[5px] justify-between  items-center",
             classnames?.div,
-            `${error && "border-red-500"}`
+            `${error && "border-red-400"}`
           )
         )}
       >
@@ -58,6 +60,7 @@ const Input = <T extends FieldValues>({
             clsx(" focus:outline-none w-full text-[14px]", classnames?.input)
           )}
           placeholder={placeholder}
+          readOnly={readonly}
         />
         {inputType === "password" ? (
           <EyeOff onClick={() => setInputType("text")} width={15} />

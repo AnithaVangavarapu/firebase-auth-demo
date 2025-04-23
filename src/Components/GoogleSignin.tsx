@@ -21,7 +21,8 @@ const GoogleSignin = () => {
           password: "",
           photo: userData.photoURL,
         });
-        navigate("/dashboard");
+        localStorage.setItem("isUserLoggedIn", "true");
+        navigate("/profile");
       }
       console.log("user logged in successfully");
     } catch (error) {
