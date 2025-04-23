@@ -1,6 +1,11 @@
 import { DocumentData, getDoc, doc } from "firebase/firestore";
 import { useOutletContext } from "react-router-dom";
-import { Button, Input, InputPassword } from "../../CommonComponents";
+import {
+  Button,
+  Input,
+  InputPassword,
+  FileUpload,
+} from "../../CommonComponents";
 import { db } from "../../FireBase";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -16,6 +21,7 @@ export interface ProfileUpdateProps {
   currentPassword?: string;
   newPassword?: string;
   confirmNewPassword?: string;
+  imageFile?: File;
 }
 
 const classNames = {
@@ -28,14 +34,15 @@ const Profile: React.FC = () => {
   const userdata = useOutletContext<contextProps>();
   // const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState<DocumentData>({});
-  const [defaultValues, setDefaultValues] = useState<object>({});
+
   const {
     handleSubmit,
     register,
+    reset,
+    control,
     formState: { errors },
-  } = useForm<ProfileUpdateProps>({
-    defaultValues: defaultValues,
-  });
+  } = useForm<ProfileUpdateProps>();
+  const [showImagePopup, setShowImagePopup] = useState<boolean>(false);
   const fetchUserDetails = async () => {
     const docRef = doc(db, "Users", userdata.userId);
     const userdoc = await getDoc(docRef);
@@ -50,7 +57,7 @@ const Profile: React.FC = () => {
         userName: userData.userName ? userData.userName : "",
       };
       console.log(newDefaultValues);
-      setDefaultValues(newDefaultValues);
+      reset(newDefaultValues);
     }
   };
 
@@ -62,8 +69,9 @@ const Profile: React.FC = () => {
   const handleDataChange = (data: ProfileUpdateProps) => {
     console.log("changed data", data);
   };
+  const handleUploadPicture = () => {};
   return (
-    <div className="flex flex-col  border max-w-full m-5">
+    <div className="flex flex-col  border max-w-full m-20 relative">
       <div>
         <p className="font-bold text-[18px]">My Profile</p>
         <p className="text-[12px] text-gray-400">
@@ -88,6 +96,7 @@ const Profile: React.FC = () => {
           <Button
             label="Upload new picture"
             classNames="bg-black text-[12px] py-0.5 px-1 border-black font-light"
+            onClick={() => setShowImagePopup(true)}
           />
           <Button
             label="Remove"
@@ -123,7 +132,7 @@ const Profile: React.FC = () => {
               label="Email"
               register={register}
               name="email"
-              // readonly={true}
+              readonly={true}
               classnames={classNames}
             />
             <Input
@@ -176,6 +185,20 @@ const Profile: React.FC = () => {
           type="submit"
         />
       </form>
+      {showImagePopup && (
+        <div className="border bg-white absolute w-[30%] h-[30%] top-10 left-[40%] p-2">
+          <FileUpload
+            label="Select Image"
+            control={control}
+            name="imageFile"
+            classnames={{
+              label: "pb-2 text-center",
+              input: "border",
+              div: "",
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
