@@ -10,9 +10,10 @@ const Profile: React.FC = () => {
     new_password,
     current_password,
     errors,
+    isDirty,
   } = useProfile();
   return (
-    <div className="flex flex-col max-w-full m-14 relative">
+    <div className="flex flex-col max-w-full mx-14 relative mt-14">
       <BasicProfileInfo />
       <form onSubmit={handleSubmit(handleDataChange)}>
         <div className="border rounded-lg flex  py-5 px-6 mt-5 flex-col border-gray-100">
@@ -138,8 +139,9 @@ const Profile: React.FC = () => {
         </div>
         <Button
           label="Update Changes"
-          classNames="mx-4.5 my-8 bg-black text-[10px]  p-1.5 border-black font-light rounded-[2px] "
+          classNames={`mx-4.5 my-8 bg-black text-[10px]  p-1.5 border-black font-light rounded-[2px] `}
           type="submit"
+          disable={!isDirty}
         />
       </form>
     </div>

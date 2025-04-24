@@ -5,18 +5,20 @@ import { useOutletContext } from "react-router-dom";
 import { contextProps } from "../pages/Dashboard/profile/useProfile";
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../FireBase";
-
+import { toast } from "react-toastify";
 interface FileUploadFields {
   photo: Array<File>;
 }
 interface FileUploadProps {
   setShowImagePopup: (val: boolean) => void;
+  setPhoto: (val: string) => void;
 }
-const FileUpload = ({ setShowImagePopup }: FileUploadProps) => {
+
+const FileUpload = ({ setShowImagePopup, setPhoto }: FileUploadProps) => {
   const { register, handleSubmit } = useForm<FileUploadFields>();
 
   const userData = useOutletContext<contextProps>();
-  const userId: string = userData.userId;
+  const userId: string = userData.userEmail;
 
   const handleUploadFile = async (data: FileUploadFields) => {
     // console.log(data.photo);
@@ -31,7 +33,12 @@ const FileUpload = ({ setShowImagePopup }: FileUploadProps) => {
     console.log(docRef);
     await updateDoc(docRef, updatePhoto)
       .then(() => {
-        alert("Profile picture updated successfully");
+        // alert("Profile picture updated successfully");
+        toast.success("Profile picture updated successfully", {
+          position: "top-center",
+          className: "text-sm",
+        });
+        setPhoto(imageURL);
         setShowImagePopup(false);
       })
       .catch((error) => console.log(error));
@@ -45,19 +52,24 @@ const FileUpload = ({ setShowImagePopup }: FileUploadProps) => {
         name="photo"
         type="file"
         accept="image/*"
-        classnames={{ input: "" }}
+        classnames={{
+          input:
+            "border rounded-lg file:bg-black text-[14px] file:text-white file:p-2 ",
+          div: "border-none p-0",
+          label: "text-center pb-6 text-[20px] font-medium ",
+        }}
       />
-      <div className="flex gap-3 mt-4">
+      <div className="flex gap-3 mt-3 mx-3">
         <Button
           label="Cancel"
           type="button"
           onClick={() => setShowImagePopup(false)}
-          classNames="bg-black border-black text-[10px] font-medium rounded-[2px]"
+          classNames="w-full text-sm  rounded-lg p-[5px] bg-black border-none mt-5 font-medium"
         />
         <Button
           label="Upload"
           type="submit"
-          classNames="bg-black border-black text-[10px] font-medium rounded-[2px]"
+          classNames="w-full text-sm  rounded-lg p-[5px] bg-black border-none mt-5 font-medium"
         />
       </div>
     </form>

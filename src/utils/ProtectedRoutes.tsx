@@ -6,18 +6,36 @@ import { Navbar, Sidemenu } from "../pages/Dashboard";
 const ProtectedRoutes = () => {
   const [userDetails, setUserDetails] = useState<DocumentData>({});
   const [loading, setLoading] = useState<boolean>(true);
-  const [uid, setUid] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [fullName, setFullName] = useState<string>("");
+  const [fullNameIntial, setFullNameIntial] = useState<string>("");
+  const [photo, setPhoto] = useState<string>("");
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        setUid(user.uid);
+      if (user && user.email !== null) {
+        setEmail(user.email);
         console.log(user);
         localStorage.setItem("isUserLoggedIn", "true");
-        const docRef = doc(db, "Users", user.uid);
+        const docRef = doc(db, "Users", user.email);
         const userdoc = await getDoc(docRef);
         const userData = userdoc.data();
         if (userData) {
           setUserDetails(userData);
+          const FirstName = userData.firstName ? userData.firstName : "";
+          const fInitial = userData.firstName
+            ? userData.firstName?.charAt(0).toUpperCase()
+            : "";
+          const LastName = userData.lastName ? userData.lastName : "";
+          const lIntial = userData.lastName
+            ? userData.lastName?.charAt(0).toUpperCase()
+            : "";
+          const FullName = FirstName + " " + LastName;
+          const FullNameIntial = fInitial + " " + lIntial;
+          setFullName(FullName);
+          setFullNameIntial(FullNameIntial);
+          if (userData.photo !== " ") {
+            setPhoto(userData.photo);
+          }
         }
       }
       setLoading(false);
@@ -36,16 +54,27 @@ const ProtectedRoutes = () => {
     );
   const contextData = {
     userDetails: userDetails,
-    userId: uid,
+    userEmail: email,
+    fullName: fullName,
+    setfullName: setFullName,
+    fullNameIntial: fullNameIntial,
+    setFullNameIntial: setFullNameIntial,
+    photo: photo,
+    setPhoto: setPhoto,
   };
 
   return localStorage.getItem("isUserLoggedIn") ? (
     <div className="max-w-full ">
       <div className="">
-        <Navbar userDetails={userDetails} />
+        <Navbar
+          userDetails={userDetails}
+          fullName={fullName}
+          fullNameIntial={fullNameIntial}
+          photo={photo}
+        />
       </div>
-      <div className="grid grid-cols-12 max-w-full ">
-        <div className="bg-black text-white col-span-2 lg:min-h-[845px]">
+      <div className="grid grid-cols-12 max-w-full">
+        <div className="bg-black text-white col-span-2 lg:min-h-[849px] ">
           <Sidemenu />
         </div>
         <div className="col-span-10 ">

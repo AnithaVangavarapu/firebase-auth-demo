@@ -1,7 +1,8 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth, db } from "../FireBase";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+
 const GoogleSignin = () => {
   const navigate = useNavigate();
   const googleSignin = async () => {
@@ -15,16 +16,26 @@ const GoogleSignin = () => {
       console.log(result.user);
       if (result.user) {
         const userData = result.user;
-        await setDoc(doc(db, "Users", userData.uid), {
-          email: userData.email,
-          userName: userData.displayName,
-          password: "",
-          photo: userData.photoURL,
-        });
-        localStorage.setItem("isUserLoggedIn", "true");
-        navigate("/profile");
+        if (userData.email !== null) {
+          const getDocRef = await getDoc(doc(db, "Users", userData.email));
+          console.log(getDocRef.exists());
+          if (getDocRef.exists()) {
+            localStorage.setItem("isUserLoggedIn", "true");
+            navigate("/profile");
+            console.log("user logged in successfully");
+          } else {
+            await setDoc(doc(db, "Users", userData.email), {
+              email: userData.email,
+              userName: userData.displayName,
+              password: "",
+              photo: userData.photoURL,
+            });
+            localStorage.setItem("isUserLoggedIn", "true");
+            navigate("/profile");
+            console.log("user logged in successfully");
+          }
+        }
       }
-      console.log("user logged in successfully");
     } catch (error) {
       console.log(error);
     }

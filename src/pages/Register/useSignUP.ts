@@ -34,12 +34,14 @@ export const useSignUp = () => {
       console.log(currentUser);
       //Store new user data in firestore with additional fields (userName and password) based on uid
       if (currentUser) {
-        await setDoc(doc(db, "Users", currentUser.uid), {
-          email: currentUser.email,
-          userName: data.userName,
-          password: data.password,
-          photo: "",
-        });
+        if (currentUser.email !== null) {
+          await setDoc(doc(db, "Users", currentUser.email), {
+            email: currentUser.email,
+            userName: data.userName,
+            password: data.password,
+            photo: "",
+          });
+        }
         navigate("/profile");
       }
       console.log("user registered successfully");

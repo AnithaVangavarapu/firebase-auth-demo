@@ -4,30 +4,29 @@ import { useState } from "react";
 const Sidemenu = () => {
   const [activeLink, setActiveLink] = useState("profile");
   return (
-    <div className="text-[12px] py-15 flex flex-col gap-5">
+    <div className="text-[14px] py-15 flex flex-col gap-5">
       <div>
-        <Link to={"/profile"} className="grid grid-cols-4 items-center">
-          <div className="col-span-1">
-            {activeLink === "profile" && (
-              <Minus style={{ transform: "rotate(90deg)" }} />
-            )}
+        <Link to={"/profile"} className="flex items-center flex-row gap-4">
+          <div className="">
+            <Minus
+              style={{ transform: "rotate(90deg)" }}
+              color={activeLink === "profile" ? "white" : "black"}
+            />
           </div>
-          <span onClick={() => setActiveLink("profile")} className="col-span-3">
+          <span onClick={() => setActiveLink("profile")} className="">
             Profile
           </span>
         </Link>
       </div>
       <div>
-        <Link to={"/dashboard"} className="grid grid-cols-4 items-center">
-          <div className="col-span-1">
-            {activeLink === "dashboard" && (
-              <Minus style={{ transform: "rotate(90deg)" }} />
-            )}
+        <Link to={"/dashboard"} className="flex flex-row gap-4 items-center">
+          <div className="">
+            <Minus
+              style={{ transform: "rotate(90deg)" }}
+              color={activeLink === "dashboard" ? "white" : "black"}
+            />
           </div>
-          <span
-            onClick={() => setActiveLink("dashboard")}
-            className="col-span-3"
-          >
+          <span onClick={() => setActiveLink("dashboard")} className="">
             Dashboard
           </span>
         </Link>

@@ -9,6 +9,8 @@ const BasicProfileInfo = () => {
     initialLetter,
     handleRemovePicture,
     fullName,
+    setPhoto,
+    photo,
   } = useProfile();
   return (
     <div>
@@ -22,42 +24,43 @@ const BasicProfileInfo = () => {
         <div className="flex items-center gap-3">
           <div
             className={` container w-12 h-12  rounded-full justify-center flex items-center cursor-pointer overflow-hidden relative,${
-              userDetails.photo ? "" : " text-black border"
+              photo !== " " && " border-black border"
             }`}
           >
-            {userDetails.photo ? (
-              <img src={userDetails.photo} alt={initialLetter} className="" />
+            {photo ? (
+              <img src={photo} alt={initialLetter} className="" />
             ) : (
               <div className=""> {initialLetter}</div>
             )}
           </div>
-          <div className="flex flex-col">
-            <span className="font-medium text-[14px]">
-              {fullName !== "undefined undefined"
-                ? fullName
-                : userDetails.userName}
-            </span>
-            <span className="text-gray-400 text-[12px] font-light">
+          <div className="flex flex-col items-center">
+            <span className="font-medium text-[14px]">{fullName}</span>
+            {/* <span className="text-gray-400 text-[12px] font-light">
               designation
-            </span>
+            </span> */}
           </div>
         </div>
         <div className="flex gap-3">
           <Button
             label="Upload new picture"
-            classNames="bg-black text-[10px] py-0.5 px-1 border-black font-medium"
+            classNames="bg-black text-[10px] py-1 px-1 border-black font-medium"
             onClick={() => setShowImagePopup(true)}
           />
           <Button
             label="Remove"
-            classNames="bg-red-50 text-red-400 border-red-50 text-[10px] py-0.5 px-1.5 font-medium"
+            classNames="bg-red-50 text-red-400 border-red-50 text-[10px] py-1 px-1.5 font-medium"
             onClick={handleRemovePicture}
           />
         </div>
       </div>
       {showImagePopup && (
-        <div className="border bg-white absolute w-[30%] h-[30%] top-10 left-[40%] p-2 flex justify-center items-center flex-col">
-          <FileUpload setShowImagePopup={setShowImagePopup} />
+        <div className="bg-[rgba(0,0,0,0.5)] top-0 left-0 z-9 w-[100vw] h-[100vh] fixed">
+          <div className="border bg-white  fixed top-0 bottom-0 left-0 right-0 m-auto  w-fit h-fit p-10 border-white rounded-lg shadow-md">
+            <FileUpload
+              setShowImagePopup={setShowImagePopup}
+              setPhoto={setPhoto}
+            />
+          </div>
         </div>
       )}
     </div>
