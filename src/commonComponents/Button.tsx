@@ -19,7 +19,7 @@ const Button: React.FC<ButtonProps> = ({
     <button
       className={twMerge(
         clsx(
-          `rounded-md border px-2 cursor-pointer bg-blue-500 border-blue-200 text-white text-md`,
+          `rounded-md border px-2 cursor-pointer bg-blue-500 border-blue-200 text-white text-sm`,
           classNames
         )
       )}

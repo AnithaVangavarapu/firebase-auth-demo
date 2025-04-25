@@ -46,7 +46,7 @@ const Input = <T extends FieldValues>({
       style={{ width: "100%" }}
     >
       {label && (
-        <label className={twMerge(clsx("text-sm", classnames?.label))}>
+        <label className={twMerge(clsx("text-[12px]", classnames?.label))}>
           {label}
         </label>
       )}

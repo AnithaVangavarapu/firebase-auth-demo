@@ -3,6 +3,16 @@ import { auth, db } from "../FireBase";
 import { doc, DocumentData, getDoc } from "firebase/firestore";
 import { Navigate, Outlet } from "react-router-dom";
 import { Navbar, Sidemenu } from "../pages/Dashboard";
+export interface contextProps {
+  userDetails: DocumentData;
+  userEmail: string;
+  fullName: string;
+  setFullName: (val: string) => void;
+  fullNameIntial: string;
+  setFullNameIntial: (val: string) => void;
+  setPhoto: (val: string) => void;
+  photo: string;
+}
 const ProtectedRoutes = () => {
   const [userDetails, setUserDetails] = useState<DocumentData>({});
   const [loading, setLoading] = useState<boolean>(true);
@@ -30,7 +40,7 @@ const ProtectedRoutes = () => {
             ? userData.lastName?.charAt(0).toUpperCase()
             : "";
           const FullName = FirstName + " " + LastName;
-          const FullNameIntial = fInitial + " " + lIntial;
+          const FullNameIntial = fInitial + lIntial;
           setFullName(FullName);
           setFullNameIntial(FullNameIntial);
           if (userData.photo !== " ") {
@@ -52,11 +62,11 @@ const ProtectedRoutes = () => {
         <p className=" text-white text-lg font-medium"> LOADING...</p>
       </div>
     );
-  const contextData = {
+  const contextData: contextProps = {
     userDetails: userDetails,
     userEmail: email,
     fullName: fullName,
-    setfullName: setFullName,
+    setFullName: setFullName,
     fullNameIntial: fullNameIntial,
     setFullNameIntial: setFullNameIntial,
     photo: photo,
@@ -73,7 +83,7 @@ const ProtectedRoutes = () => {
           photo={photo}
         />
       </div>
-      <div className="grid grid-cols-12 max-w-full">
+      <div className="grid grid-cols-12 max-w-full border-t-[1px] rounded-r-lg border-gray-200">
         <div className="bg-black text-white col-span-2 lg:min-h-[849px] ">
           <Sidemenu />
         </div>

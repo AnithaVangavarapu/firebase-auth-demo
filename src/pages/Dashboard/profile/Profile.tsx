@@ -1,6 +1,7 @@
 import { Button, Input, InputPassword } from "../../../CommonComponents";
 import { useProfile } from "./useProfile";
 import BasicProfileInfo from "./BasicProfileInfo";
+
 const Profile: React.FC = () => {
   const {
     handleSubmit,
@@ -12,16 +13,17 @@ const Profile: React.FC = () => {
     errors,
     isDirty,
   } = useProfile();
+
   return (
     <div className="flex flex-col max-w-full mx-14 relative mt-14">
       <BasicProfileInfo />
       <form onSubmit={handleSubmit(handleDataChange)}>
-        <div className="border rounded-lg flex  py-5 px-6 mt-5 flex-col border-gray-100">
+        <div className="border-[1px] rounded-lg flex  py-5 px-6 mt-5 flex-col border-gray-200 bg-white">
           <div className="flex flex-col">
             <span className="font-medium text-[14px]">
               Personal Information
             </span>
-            <span className="text-gray-400 text-[12px] font-light">
+            <span className="text-gray-400 text-[12px] font-medium">
               Update your personal information
             </span>
           </div>
@@ -68,10 +70,10 @@ const Profile: React.FC = () => {
             />
           </div>
         </div>
-        <div className="border border-gray-100 rounded-lg flex  py-5 px-6 mt-5 flex-col">
+        <div className="border-[1px] border-gray-200 rounded-lg flex  py-5 px-6 mt-5 flex-col bg-white">
           <div className="flex flex-col">
             <span className="font-medium text-[14px]">Change Password</span>
-            <span className="text-gray-400 text-[12px] font-light">
+            <span className="text-gray-400 text-[12px] font-medium">
               Your new password length should be 8-10 letters
             </span>
           </div>
@@ -139,7 +141,7 @@ const Profile: React.FC = () => {
         </div>
         <Button
           label="Update Changes"
-          classNames={`mx-4.5 my-8 bg-black text-[10px]  p-1.5 border-black font-light rounded-[2px] `}
+          classNames={`mx-4.5 mt-8 bg-black text-[14px] p-1 border-black font-medium rounded-lg `}
           type="submit"
           disable={!isDirty}
         />
