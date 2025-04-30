@@ -1,4 +1,4 @@
-import { Button, Input, InputPassword } from "../../../CommonComponents";
+import { Button, Input, InputPassword } from "../../../commonComponents";
 import { useProfile } from "./useProfile";
 import BasicProfileInfo from "./BasicProfileInfo";
 
