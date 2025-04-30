@@ -1,5 +1,5 @@
 import { twMerge } from "tw-merge";
-import { Button, Input, InputPassword } from "../../temporaryRename";
+import { Button, Input, InputPassword } from "../../CommonComponents";
 import { useSignUp } from "./useSignUP";
 import clsx from "clsx";
 const classNames = {

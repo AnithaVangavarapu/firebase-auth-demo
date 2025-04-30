@@ -1,5 +1,5 @@
 import { useBasicProfileInfo } from "./useBasicProfileInfo";
-import { Button } from "../../../temporaryRename";
+import { Button } from "../../../CommonComponents";
 import { FileUpload } from "../../../Components";
 
 const BasicProfileInfo = () => {
