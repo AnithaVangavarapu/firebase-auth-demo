@@ -132,7 +132,7 @@ const Profile: React.FC = () => {
                   required:
                     current_password && "Confirm New Password is required",
                   validate: {
-                    confirmPasswordMatch: (value) =>
+                    confirmPasswordMatch: (value: string | undefined) =>
                       value === new_password || "Password don't match",
                   },
                 }}

@@ -76,7 +76,7 @@ const SignUp = () => {
             rules={{
               required: "Confirm Password is required",
               validate: {
-                confirmPasswordMatch: (value) =>
+                confirmPasswordMatch: (value: string) =>
                   value === password || "Password don't match",
               },
             }}
