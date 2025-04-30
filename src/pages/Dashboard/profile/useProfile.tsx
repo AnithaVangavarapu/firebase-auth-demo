@@ -1,11 +1,11 @@
 import { auth, db } from "../../../FireBase";
-import { useEffect } from "react";
+import { useEffect, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { doc, updateDoc } from "firebase/firestore";
-import { useOutletContext } from "react-router-dom";
 import { updatePassword } from "firebase/auth";
 import { toast } from "react-toastify";
-import { contextProps } from "../../../utils/ProtectedRoutes";
+import UserContext, { UserContextProps } from "../../../context/UserProvider";
+import { useNavigate } from "react-router-dom";
 export interface ProfileUpdateProps {
   firstName?: string;
   lastName?: string;
@@ -24,8 +24,18 @@ const classNames = {
 };
 
 export const useProfile = () => {
-  const { userDetails, userEmail, fullName, fullNameIntial, setPhoto, photo } =
-    useOutletContext<contextProps>();
+  const userContextData = useContext<UserContextProps>(UserContext);
+  const [initialLetter, setInitialLetter] = useState<string>("");
+  const {
+    userDetails,
+    email,
+    fullName,
+    fullNameIntial,
+    setPhoto,
+    photo,
+    isAuth,
+    isGoogleSignIn,
+  } = userContextData;
   const {
     handleSubmit,
     register,
@@ -33,9 +43,18 @@ export const useProfile = () => {
     formState: { errors, isDirty },
     watch,
   } = useForm<ProfileUpdateProps>();
+  const navigate = useNavigate();
 
   const new_password = watch("newPassword");
   const current_password = watch("currentPassword");
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/");
+    } else {
+      navigate("/signin");
+    }
+  }, [isAuth]);
 
   useEffect(() => {
     const newDefaultValues: object = {
@@ -45,19 +64,20 @@ export const useProfile = () => {
       userName: userDetails.userName ? userDetails.userName : "",
     };
     reset(newDefaultValues);
-  }, []);
+  }, [userDetails]);
 
-  const initialLetter =
-    fullNameIntial !== " "
-      ? fullNameIntial
-      : userDetails?.userName?.charAt(0).toUpperCase();
+  useEffect(() => {
+    const letters =
+      fullNameIntial && fullNameIntial !== " "
+        ? fullNameIntial
+        : userDetails?.userName?.charAt(0).toUpperCase();
+    setInitialLetter(letters);
+  }, [userDetails, fullNameIntial]);
 
   //Submitting updated data
   const handleDataChange = async (data: ProfileUpdateProps) => {
-    console.log("changed data", data);
-    const docRef = doc(db, "Users", userEmail);
+    const docRef = doc(db, "Users", email);
     try {
-      console.log("currentPassword", data.currentPassword);
       if (data.currentPassword !== undefined) {
         if (data.currentPassword === data.newPassword) {
           toast.warning("Current and new password should not be same !", {
@@ -74,6 +94,10 @@ export const useProfile = () => {
                   password: data.newPassword,
                 };
                 updateDoc(docRef, updateNewPassword);
+                toast.success("Password updated !", {
+                  position: "top-right",
+                  className: "text-sm",
+                });
               })
               .catch((error) => {
                 toast.error("Something went wrong while updating Password !", {
@@ -96,7 +120,9 @@ export const useProfile = () => {
             position: "top-right",
             className: "text-sm",
           });
-          window.location.reload();
+          setTimeout(() => {
+            window.location.reload();
+          }, 4000);
         })
         .catch((error) => {
           toast.error("Something went wrong !", {
@@ -122,5 +148,6 @@ export const useProfile = () => {
     setPhoto,
     isDirty,
     photo,
+    isGoogleSignIn,
   };
 };

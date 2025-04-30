@@ -2,9 +2,14 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth, db } from "../FireBase";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import UserContext, { UserContextProps } from "../context/UserProvider";
 
 const GoogleSignin = () => {
+  const userContextData = useContext<UserContextProps>(UserContext);
+  const { setIsAuth, setIsGoogleSignIn } = userContextData;
   const navigate = useNavigate();
+
   const googleSignin = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -12,17 +17,19 @@ const GoogleSignin = () => {
       provider.setCustomParameters({
         prompt: "select_account",
       });
+
       const result = await signInWithPopup(auth, provider);
-      console.log(result.user);
+
       if (result.user) {
         const userData = result.user;
         if (userData.email !== null) {
           const getDocRef = await getDoc(doc(db, "Users", userData.email));
-          console.log(getDocRef.exists());
+
           if (getDocRef.exists()) {
             localStorage.setItem("isUserLoggedIn", "true");
-            navigate("/profile");
-            console.log("user logged in successfully");
+            setIsAuth(true);
+            setIsGoogleSignIn(true);
+            navigate("/");
           } else {
             await setDoc(doc(db, "Users", userData.email), {
               email: userData.email,
@@ -31,15 +38,17 @@ const GoogleSignin = () => {
               photo: userData.photoURL,
             });
             localStorage.setItem("isUserLoggedIn", "true");
-            navigate("/profile");
-            console.log("user logged in successfully");
+            setIsAuth(true);
+            navigate("/");
           }
         }
       }
     } catch (error) {
       console.log(error);
+      setIsAuth(false);
     }
   };
+
   return (
     <div className="flex flex-col items-center m-1">
       <div

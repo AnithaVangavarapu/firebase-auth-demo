@@ -16,7 +16,7 @@ const SignIn = () => {
     register,
     formState: { errors },
   } = useForm<SignInProps>();
-  const { handleLogin, authError, Link } = useSignIn();
+  const { handleLogin, authError, Link, loading } = useSignIn();
 
   return (
     <div className="flex h-screen justify-center items-center bg-gray-100">
@@ -57,8 +57,9 @@ const SignIn = () => {
             Forget Password?
           </div>
           <Button
-            label="Sign In"
-            classNames="w-full text-sm  rounded-lg p-[10px] bg-black border-none mt-5 font-medium"
+            label={loading ? "Loading" : "Sign In"}
+            classNames={`w-full text-sm  rounded-lg p-[10px] bg-black border-none mt-5 font-medium `}
+            disable={loading}
           />
         </form>
         <div className=" text-[12px] text-center mt-4">

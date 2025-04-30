@@ -1,25 +1,29 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useOutletContext } from "react-router-dom";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../FireBase";
-import { contextProps } from "../../../utils/ProtectedRoutes";
+import UserContext, { UserContextProps } from "../../../context/UserProvider";
 
 export const useBasicProfileInfo = () => {
   const [showImagePopup, setShowImagePopup] = useState<boolean>(false);
-  const { userDetails, userEmail, fullName, fullNameIntial, setPhoto, photo } =
-    useOutletContext<contextProps>();
+  const [initialLetter, setInitialLetter] = useState<string>("");
+  const userContextData = useContext<UserContextProps>(UserContext);
+  const { userDetails, email, fullName, fullNameIntial, setPhoto, photo } =
+    userContextData;
 
-  const initialLetter =
-    fullNameIntial !== " "
-      ? fullNameIntial
-      : userDetails?.userName?.charAt(0).toUpperCase();
+  useEffect(() => {
+    const letters =
+      fullNameIntial && fullNameIntial !== " "
+        ? fullNameIntial
+        : userDetails?.userName?.charAt(0).toUpperCase();
+    setInitialLetter(letters);
+  }, [userDetails, fullNameIntial]);
 
   //Remove profile picture
   const handleRemovePicture = async () => {
     if (photo) {
       if (window.confirm("Do you want to remove profile picture?")) {
-        const docRef = doc(db, "Users", userEmail);
+        const docRef = doc(db, "Users", email);
         const updatePhoto = {
           photo: "",
         };

@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import Button from "../CommonComponents/Button";
 import Input from "../CommonComponents/Input";
-import { useOutletContext } from "react-router-dom";
-import { contextProps } from "../utils/ProtectedRoutes";
+import UserContext, { UserContextProps } from "../context/UserProvider";
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../FireBase";
 import { toast } from "react-toastify";
+import { useContext } from "react";
 interface FileUploadFields {
   photo: Array<File>;
 }
@@ -16,18 +16,19 @@ interface FileUploadProps {
 
 const FileUpload = ({ setShowImagePopup, setPhoto }: FileUploadProps) => {
   const { register, handleSubmit } = useForm<FileUploadFields>();
-  const userData = useOutletContext<contextProps>();
-  const userId: string = userData.userEmail;
+  const userContextData = useContext<UserContextProps>(UserContext);
+  const { email } = userContextData;
+  const userId: string = email;
 
+  //store and update profilepicture
   const handleUploadFile = async (data: FileUploadFields) => {
-    console.log(URL.createObjectURL(data.photo[0]));
     const imageURL = window.URL.createObjectURL(data.photo[0]);
 
     const updatePhoto = {
       photo: imageURL,
     };
     const docRef = doc(db, "Users", userId);
-    console.log(docRef);
+
     await updateDoc(docRef, updatePhoto)
       .then(() => {
         toast.success("Profile picture updated successfully", {

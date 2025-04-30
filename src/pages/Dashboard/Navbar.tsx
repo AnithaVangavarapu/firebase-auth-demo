@@ -1,46 +1,42 @@
-import { DocumentData } from "firebase/firestore";
 import { auth } from "../../FireBase";
 import { Triangle, LogOut } from "lucide-react";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-interface NavbarProps {
-  userDetails: DocumentData;
-  fullName: string;
-  fullNameIntial: string;
-  photo: string;
-}
+import UserContext, { UserContextProps } from "../../context/UserProvider";
 
-const Navbar: React.FC<NavbarProps> = ({
-  userDetails,
-  fullName,
-  fullNameIntial,
-  photo,
-}) => {
+const Navbar: React.FC = () => {
+  const userContextData = useContext<UserContextProps>(UserContext);
+  const { userDetails, fullName, fullNameIntial, photo, setIsAuth } =
+    userContextData;
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const initialLetter =
-    fullNameIntial !== " "
-      ? fullNameIntial
-      : userDetails?.userName?.charAt(0).toUpperCase();
-
+  const [initialLetter, setInitialLetter] = useState<string>("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const letters =
+      fullNameIntial && fullNameIntial !== " "
+        ? fullNameIntial
+        : userDetails?.userName?.charAt(0).toUpperCase();
+    setInitialLetter(letters);
+  }, [userDetails, fullNameIntial]);
+
   const handleLogout = async () => {
-    console.log("loggingout...");
     try {
       await auth.signOut();
       localStorage.clear();
+      setIsAuth(false);
       navigate("/signin");
-      console.log("user logged out");
     } catch (error) {
       console.log(error);
     }
   };
+
   const handleClickOutside = (event: MouseEvent) => {
     if (
       dropdownRef.current &&
       !dropdownRef.current.contains(event.target as Node)
     ) {
-      console.log("click outside");
       setShowDropdown(false);
     }
   };
@@ -84,7 +80,6 @@ const Navbar: React.FC<NavbarProps> = ({
             <div className="border w-[20%] h-10 absolute right-[35px] flex items-center p-2 justify-between bg-white border-gray-200 shadow-sm mt-1 cursor-pointer top-10 rounded-lg">
               <div
                 onClick={() => {
-                  console.log("logout button clicked");
                   handleLogout();
                 }}
                 className="flex justify-between flex-row w-full"

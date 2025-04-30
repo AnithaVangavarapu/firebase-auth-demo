@@ -1,6 +1,7 @@
 import { useBasicProfileInfo } from "./useBasicProfileInfo";
 import { Button } from "../../../CommonComponents";
 import { FileUpload } from "../../../Components";
+
 const BasicProfileInfo = () => {
   const {
     showImagePopup,
@@ -11,6 +12,7 @@ const BasicProfileInfo = () => {
     setPhoto,
     photo,
   } = useBasicProfileInfo();
+
   return (
     <div className="">
       <div>
@@ -34,9 +36,6 @@ const BasicProfileInfo = () => {
           </div>
           <div className="flex flex-col items-center">
             <span className="font-medium text-[14px]">{fullName}</span>
-            {/* <span className="text-gray-400 text-[12px] font-light">
-              designation
-            </span> */}
           </div>
         </div>
         <div className="flex gap-3">

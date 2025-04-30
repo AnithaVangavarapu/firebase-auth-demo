@@ -6,22 +6,25 @@ import { Profile } from "./pages/Dashboard/profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
-
+import { UserProvider } from "./context/UserProvider";
+import NotFound from "./pages/NotFound";
 function App() {
   return (
     <div className="font-poppins">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<SignIn />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route element={<ProtectedRoutes />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-      <ToastContainer />
+      <UserProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/" element={<Profile />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+        <ToastContainer />
+      </UserProvider>
     </div>
   );
 }

@@ -10,13 +10,23 @@ const classNames = {
 };
 
 const SignUp = () => {
-  const { handleSubmit, register, handleSignup, errors, password, Link } =
-    useSignUp();
+  const {
+    handleSubmit,
+    register,
+    handleSignup,
+    errors,
+    password,
+    Link,
+    error,
+  } = useSignUp();
 
   return (
     <div className="flex h-screen justify-center items-center bg-gray-100">
       <div className=" border  rounded-[20px] border-gray-200  flex  flex-col justify-evenly shadow-md lg:w-[25%]  py-8 px-6 bg-white">
         <h2 className="text-lg font-medium pb-1">Sign Up</h2>
+        {error && (
+          <p className="text-red-500 text-[12px] text-center mt-4">{error}</p>
+        )}
         <form onSubmit={handleSubmit(handleSignup)} className="flex flex-col ">
           <Input
             register={register}

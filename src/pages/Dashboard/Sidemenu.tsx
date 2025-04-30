@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import { Minus } from "lucide-react";
 import { useState } from "react";
+
 const Sidemenu = () => {
   const [activeLink, setActiveLink] = useState("profile");
+
   return (
     <div className="text-[14px] py-15 flex flex-col gap-5">
       <div>
-        <Link to={"/profile"} className="flex items-center flex-row gap-4">
+        <Link to={"/"} className="flex items-center flex-row gap-4">
           <div className="">
             <Minus
               style={{ transform: "rotate(90deg)" }}
