@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Button, Input } from "../commonComponents";
+import { Button, Input } from "../CommonComponents";
 import UserContext, { UserContextProps } from "../context/UserProvider";
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../FireBase";
