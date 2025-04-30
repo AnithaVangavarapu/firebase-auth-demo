@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Button, Input, InputPassword } from "../../CommonComponents";
+import { Button, Input, InputPassword } from "../../temporaryRename";
 import { SignInProps, useSignIn } from "./useSignIn";
 import { GoogleSignin } from "../../Components";
 
