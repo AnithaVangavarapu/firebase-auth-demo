@@ -55,14 +55,14 @@ export const UserProvider: React.FC<UserProiderProps> = ({ children }) => {
   const [photo, setPhoto] = useState<string>("");
   const [isGoogleSignIn, setIsGoogleSignIn] = useState<boolean>(false);
 
-  useEffect(() => {
-    const authStatus = localStorage.getItem("isUserLoggedIn") === "true";
-    if (authStatus) {
-      setIsAuth(true);
-    } else {
-      setIsAuth(false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const authStatus = localStorage.getItem("isUserLoggedIn") === "true";
+  //   if (authStatus) {
+  //     setIsAuth(true);
+  //   } else {
+  //     setIsAuth(false);
+  //   }
+  // }, []);
 
   // Keep isAuth in sync with localStorage
   useEffect(() => {
@@ -72,6 +72,7 @@ export const UserProvider: React.FC<UserProiderProps> = ({ children }) => {
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       if (user && user.email !== null) {
+        setIsAuth(true);
         setEmail(user.email);
         const docRef = doc(db, "Users", user.email);
         const userdoc = await getDoc(docRef);
@@ -94,6 +95,8 @@ export const UserProvider: React.FC<UserProiderProps> = ({ children }) => {
             setPhoto(userData.photo);
           }
         }
+      } else {
+        setIsAuth(false);
       }
     });
   }, [auth]);

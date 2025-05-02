@@ -76,9 +76,18 @@ export const useProfile = () => {
 
   //Submitting updated data
   const handleDataChange = async (data: ProfileUpdateProps) => {
+    console.log(userDetails.password);
+    const previousPassword = userDetails.password;
     const docRef = doc(db, "Users", email);
     try {
       if (data.currentPassword !== undefined) {
+        if (data.currentPassword !== previousPassword) {
+          toast.error("Current password is wrong!", {
+            position: "top-right",
+            className: "text-sm",
+          });
+          return;
+        }
         if (data.currentPassword === data.newPassword) {
           toast.warning("Current and new password should not be same !", {
             position: "top-right",

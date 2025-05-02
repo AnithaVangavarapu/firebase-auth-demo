@@ -7,6 +7,7 @@ import UserContext, { UserContextProps } from "../context/UserProvider";
 const ProtectedRoutes = () => {
   const userContextData = useContext<UserContextProps>(UserContext);
   const { isAuth } = userContextData;
+  console.log(isAuth);
 
   return isAuth ? (
     <div className="max-w-full ">
